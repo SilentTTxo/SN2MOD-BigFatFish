@@ -1,0 +1,119 @@
+{
+  "source_blend": "WhaleGirl_Swim_Preview.blend",
+  "animation": "WhaleGirl_Quaternius_Swim_Fwd",
+  "fps": 30,
+  "frame_start": 1,
+  "frame_end": 61,
+  "duration_seconds": 2,
+  "in_place": true,
+  "skeleton_bones": 146,
+  "mesh_objects": 6,
+  "triangles": 45663,
+  "model_author": "木子恶魔 / MZEM",
+  "animation_author": "Quaternius",
+  "animation_source": "Swim_Fwd_Loop / Universal Animation Library 1",
+  "animation_source_url": "https://quaternius.itch.io/universal-animation-library",
+  "preview_speed_relative_to_source": 0.6666666666666666,
+  "textures": [
+    {
+      "image": "bq.png",
+      "file": "T_WhaleGirl_00.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "image": "head Color.png",
+      "file": "T_WhaleGirl_01.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "image": "TiPen_Color_Studio.png",
+      "file": "T_WhaleGirl_02.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "image": "Ucupaint body Color",
+      "file": "T_WhaleGirl_03.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "image": "Ucupaint clothing Color",
+      "file": "T_WhaleGirl_04.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "image": "Ucupaint hair Color",
+      "file": "T_WhaleGirl_05.png",
+      "width": 2048,
+      "height": 2048
+    }
+  ],
+  "notes": [
+    "Tail heading corrected and a small secondary sway added.",
+    "VRM MToon and spring bones need UE-specific setup.",
+    "Model creator attribution required; follow the original creator terms. Publication with attribution clarified by the user on 2026-11-02."
+  ],
+  "materials": [
+    {
+      "material": "body",
+      "images": [
+        "Ucupaint body Color"
+      ],
+      "double_sided": true
+    },
+    {
+      "material": "clothing",
+      "images": [
+        "Ucupaint clothing Color"
+      ],
+      "double_sided": true
+    },
+    {
+      "material": "expression",
+      "images": [
+        "bq.png"
+      ],
+      "double_sided": true
+    },
+    {
+      "material": "hair",
+      "images": [
+        "Ucupaint hair Color"
+      ],
+      "double_sided": true
+    },
+    {
+      "material": "head",
+      "images": [
+        "head Color.png"
+      ],
+      "double_sided": true
+    },
+    {
+      "material": "TiePen",
+      "images": [
+        "TiPen_Color_Studio.png"
+      ],
+      "double_sided": true
+    }
+  ],
+  "face_shapes": [
+    "BFF_Blink",
+    "BFF_MouthOpen",
+    "BFF_MouthRound"
+  ],
+  "files": {
+    "WhaleGirl_Swim.fbx": {
+      "bytes": 4467196,
+      "sha256": "3d888a91d7b85a6b542d02d53964d0473cdb6da7c12731db5df020d3486865df"
+    },
+    "WhaleGirl_Swim.glb": {
+      "bytes": 15678028,
+      "sha256": "5b1a50164eaeba423115b9e3aeee555526f10ab0c0ce228bb0934c893a2d6655"
+    }
+  }
+}

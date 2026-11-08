@@ -1,0 +1,18 @@
+* text=auto
+*.lua text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.ini text eol=lf
+*.uproject text eol=lf
+*.uasset binary
+*.ubulk binary
+*.uexp binary
+*.blend binary
+*.fbx binary
+*.glb binary
+*.png binary
+*.pak binary
+*.utoc binary
+*.ucas binary
+*.zip binary
