@@ -1,6 +1,6 @@
 # Big Fat Fish — 使用说明 / User Guide
 
-Version / 版本：**0.6.0-dev** · 2026-11-22 · Windows Steam public branch, UE 5.6.1, CL-131439.
+Version / 版本：**0.6.1-dev** · 2026-11-22 · Windows Steam public branch, UE 5.6.1, CL-131439.
 
 ## 依赖 / Requirement
 
@@ -16,9 +16,9 @@ Version / 版本：**0.6.0-dev** · 2026-11-22 · Windows Steam public branch, U
 
 ## 海稻与大白饭 / Sea Rice and Steamed Rice
 
-救生舱附近约 25–50 米的合适海底，会随机分布最多八株野生海稻。采收后保留一些海稻，在建造器的种植/植物分类消耗一份，栽种到原版种植槽。测试生长周期为 60 秒。装配台餐食分类：一份海稻 + 一瓶净水，五秒制作一碗大白饭。
+救生舱附近约 30–40 米的合适海底，会在固定点位生成最多八株野生海稻。点位不随存档或读档重新随机，地形未加载就等待，不换位置；已有保存的野生植株保留原位。采收后保留一些海稻，在建造器的种植/植物分类消耗一份，栽种到原版种植槽。测试生长周期为 60 秒。装配台餐食分类：一份海稻 + 一瓶净水，五秒制作一碗大白饭。
 
-Up to eight wild Sea Rice plants are distributed on suitable seabed roughly 25–50 m from the lifepod. Harvest and keep some grains for planting through the builder's farming/plants category on a native planter. The provisional growth cycle is 60 seconds. Fabricator → Meals: one Sea Rice Grain + one Water makes one Steamed Rice in five seconds.
+Up to eight wild Sea Rice plants use fixed offsets roughly 30–40 m from the lifepod. Their layout is independent of save identity and never shifts on terrain retries or reload. Previously saved wild plants keep their recorded positions. Harvest and keep some grains for planting through the builder's farming/plants category on a native planter. The provisional growth cycle is 60 seconds. Fabricator → Meals: one Sea Rice Grain + one Water makes one Steamed Rice in five seconds.
 
 **吃大白饭只恢复 25 饱食度，不召唤。** 将大白饭丢到世界里，连续超过三秒后吸引一只新大肥鱼。鱼从身后接近掉落的饭碗，伸手抓取、吃完后加入原有僚机跟随。每碗只触发一次；提前捡回或抢饭前捡回会取消，不额外扣除背包物品。演出中可关闭 PDA 观看。
 
@@ -77,3 +77,8 @@ Reverting a native checkpoint still uses the latest fish sidecar for that world;
 - 游泳 / Swim：Quaternius Universal Animation Library, Swim_Fwd_Loop (CC0).
 - JSON：rxi/json.lua (MIT), license included in `Scripts/json.LICENSE`.
 - 海稻、米饭道具和抢饭/手持动作由本项目制作。 / Crop, rice props and feeding/hold gestures authored for this project.
+
+
+0.6.1 修复：掉落大白饭检测不再调用原生 IsOwned（该函数会对空 Owner 解引用而崩溃），改为安全检查 Owner 属性。野生海稻使用固定点位，失败后不换位置；已有原生保存的植株保留原位。脚本回归检查通过，游戏内仍需复测。
+
+0.6.1 fix: dropped-rice detection no longer calls native IsOwned, which dereferences a null Owner and crashes; it safely checks the Owner property instead. Wild plants use fixed positions without shifting retry candidates. Existing native-saved plants retain their recorded locations. Script regression checks pass; in-game retesting remains pending.

@@ -19,8 +19,10 @@ end
 function manager:SetRemoveIfOutOfRange(_,flag)assert(flag==false)end
 local pod={IsValid=valid,GetWorld=function()return world end,K2_GetActorLocation=function()return {X=0,Y=0,Z=0}end}
 local terrain=true
+local rays={}
 local system={IsValid=valid,LineTraceSingleForObjects=function(_,_,start,finish,types,_,_,_,hit)
  assert(types[1]==0,'Only WorldStatic terrain')
+ rays[#rays+1]={X=start.X,Y=start.Y}
  if not terrain then return false end
  hit.ImpactNormal={Z=1};hit.ImpactPoint={X=start.X,Y=start.Y,Z=-1000};return true
 end}
@@ -28,9 +30,18 @@ function StaticFindObject(path)if path:find('GuidLibrary',1,true)then return gui
 function FindAllOf(name)if name=='UWEDynamicItemsManager'then return {manager}end;if name=='BP_StaticLifepod_Underwater_C'then return {pod}end;return {}end
 M.configure({player=function()return pc end,name=function(s)return s end,log=function()end})
 local function poll(n)for i=1,n do time=time+.5;M.poll()end end
-terrain=false;poll(25);assert(#actors==0,'Never place a wild crop without a seabed hit')
+terrain=false;poll(45);assert(#actors==0,'Never place a wild crop without a seabed hit')
+assert(#rays>=16)
+for index=9,#rays do
+ local previous=rays[(index-1)%8+1]
+ assert(rays[index].X==previous.X and rays[index].Y==previous.Y,'Terrain retries must not move the fixed planting point')
+end
 terrain=true;poll(20);assert(#actors==8)
 poll(30);assert(#actors==8)
 worldId=8;poll(40);assert(#actors==8,'Reload native saved GUIDs without respawning ripe plants')
 saveId='saveB';saves.SaveContext.ActiveSave.MetaData.SaveId=saveId;poll(40);assert(#actors==16,'World-specific population')
-print('PASS: native dynamic registration, stable world GUIDs, no reload duplication, terrain required, finite eight-plant population')
+for i=1,8 do
+ local p=M.position({X=100,Y=200,Z=0},i)
+ assert(p.X==rays[i].X+100 and p.Y==rays[i].Y+200,'Fixed layout is independent of save identity')
+end
+print('PASS: fixed offsets independent of save ID, identical terrain retry rays, native world GUIDs, no reload duplication, terrain required')

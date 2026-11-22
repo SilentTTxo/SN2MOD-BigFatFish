@@ -103,7 +103,7 @@ serving=unreal.get_default_object(unreal.load_asset(BASE+'/Blueprints/BP_BFF_Ric
 assert serving.get_editor_property('EmptyMesh').get_name()=='SM_BFF_EmptyRiceBowl'
 report.update(status='PASS: persisted native rice item, builder recipe, planter rules, growth, save/replication components and pickups',
               components={name:obj.get_class().get_path_name() for name,obj in components.items()},
-              ripening_seconds=60,panicle_anchor_cm=72,version='0.4.0-prototype',
+              ripening_seconds=60,panicle_anchor_cm=72,version='0.4.1-prototype',
               gameplay_validation='Planting and harvest accepted in v0.1.0; v0.4.0 visuals, cooking and save/reload await game test')
 (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
 print('RICE_VALIDATION_PASS',json.dumps(report),flush=True)

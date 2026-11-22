@@ -235,7 +235,7 @@ OrderingIndex=510''')
     report={'status':'editor_assets_created_game_test_pending','created':created,
             'native_growth_seconds':60,'grain_item':grain.get_path_name(),'plant_class':plant.generated_class().get_path_name(),
             'native_seed_grower':grower.get_class().get_path_name(),'save_component':'UWESaveComponent',
-            'native_farming_category':category.get_path_name(),'version':'0.4.0-prototype',
+            'native_farming_category':category.get_path_name(),'version':'0.4.1-prototype',
             'harvesting':'accepted in game by user','panicle_anchor_cm':72,
             'cooked_rice':cooked.get_path_name(),'cooking_recipe':cooked_recipe.get_path_name()}
     (OUT/'import_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')

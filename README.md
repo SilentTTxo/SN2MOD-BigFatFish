@@ -4,15 +4,15 @@ Swimming whale-girl companions for Subnautica 2, with formation following, head 
 
 为《深海迷航 2》添加鲸鱼娘外观的游泳伙伴，支持僚机跟随、头眼注视、随机眨眼、轻微嘴部动作、随机体型和存档保存。
 
-**Version / 版本:** `0.6.0-dev`
+**Version / 版本:** `0.6.1-dev`
 
-0.6.0 adds native Chinese/English localization, non-emissive Sea Rice, native-saved wild crops near the lifepod, five emote reactions and a handheld basin. Rice is ordinary food; leaving a dropped bowl for >3 seconds summons a new companion. Native UObject ownership hardens the full/empty bowl swap against GC-related crashes. New gameplay still needs in-game retesting.
+0.6.1 removes a confirmed null-owner crash in the game's native `UWEBaseItem:IsOwned` query when rice is dropped. The detector checks the owner property safely instead. Wild Sea Rice now uses eight fixed lifepod offsets, with no save-seeded randomization or moving retries. Existing native-saved plants retain their recorded positions. This runtime hotfix reuses the 0.6.0 cooked character/crop assets.
 
-0.6.0 加入原生中英本地化、无自发光海稻、救生舱附近原生保存的野生海稻、五种手势反应和手持饭盆。大白饭恢复普通食物，丢下超过三秒才召唤新同伴。满碗/空碗资源改为原生对象持有，修复垃圾回收期间失效引用的崩溃风险。新玩法仍需实机复测。
+0.6.1 修复丢弃大白饭后，调用原生 `IsOwned` 对空 Owner 解引用导致的崩溃。掉落检测改为安全检查 Owner 属性。野生海稻改为救生舱周围八个固定偏移点，不随存档随机，也不在检测失败后换点；已保存的野生植株保留原位。本次脚本修复沿用 0.6.0 已烹饪资源。
 
 **Tested target / 已验证目标环境:** Windows Steam public branch / 正式分支，UE 5.6.1，CL-131439. Other game builds are unverified / 其他游戏版本未验证。
 
-[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.6.0-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
+[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.6.1-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
 
 ## English
 
@@ -126,9 +126,9 @@ bigfatfish_follow
 
 ## Sea Rice and feeding / 海稻与抢饭召唤
 
-The complete package includes Sea Rice 0.4.0. Wild grains are available near the lifepod; plant them in native planters. Fabricator Meals: one grain + one Water → one bowl. Eat for +25 food, or drop it for >3 seconds to summon a new fish. Clap toggles the fish's handheld basin; wave toggles wander/follow; thumbs up, frustrated and thumbs down trigger happy, sad and angry. Chinese game languages show Chinese text; other languages show English.
+The complete package includes Sea Rice 0.4.1. Wild grains are available near the lifepod; plant them in native planters. Fabricator Meals: one grain + one Water → one bowl. Eat for +25 food, or drop it for >3 seconds to summon a new fish. Clap toggles the fish's handheld basin; wave toggles wander/follow; thumbs up, frustrated and thumbs down trigger happy, sad and angry. Chinese game languages show Chinese text; other languages show English.
 
-完整包包含海稻 0.4.0：救生舱附近采收野生海稻，用种植槽栽种。装配台餐食：一份海稻 + 一瓶水 → 大白饭。食用加 25 饱食度，丢弃超过三秒才召唤新鱼。鼓掌切换手持饭盆，挥手切换巡游/跟随，点赞、沮丧、差评触发 happy、sad、angry。中文显示中文，其他语言显示英文。
+完整包包含海稻 0.4.1：救生舱附近采收野生海稻，用种植槽栽种。装配台餐食：一份海稻 + 一瓶水 → 大白饭。食用加 25 饱食度，丢弃超过三秒才召唤新鱼。鼓掌切换手持饭盆，挥手切换巡游/跟随，点赞、沮丧、差评触发 happy、sad、angry。中文显示中文，其他语言显示英文。
 
 [Sea Rice guide / 海稻说明](Docs/BigFatFish_Rice_Prototype_EN_ZH.md) · [Model animations and props / 模型动作与道具清单](Docs/BigFatFish_Model_Inventory_EN_ZH.md)
 

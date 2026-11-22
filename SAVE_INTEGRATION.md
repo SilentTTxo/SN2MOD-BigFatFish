@@ -63,3 +63,8 @@ Wild plants use `UWEDynamicItemsManager:SpawnActorAndRegisterWithoutDropping` wi
 野生海稻通过原生动态物体管理器登记，固定 GUID 来自原生 SaveId 和八个种群索引。生成前检查原生保存记录与活跃物体映射，已保存或流送卸载的植株不会重复补种。沿用种植版的原生保存、生长组件，野生资源默认成熟；不写新的 JSON。实机生长状态与原生保存恢复仍待验收。
 
 Fish snapshots additionally save an optional boolean `basinMode`; legacy records default to no basin. Emotions, props, UObjects and unfinished feeding sequences are not serialized. A dropped serving is consumed only at the actual grab; inventory APIs are never called by the offering module. The existing one JSON + one backup policy is unchanged.
+
+
+0.6.1 correction: GUIDs remain SaveId-scoped, but placement no longer depends on SaveId. Eight literal offsets define a fixed layout relative to the lifepod. An unloaded/unsuitable point is retried at exactly the same X/Y; no alternate candidate is selected. Existing native GUID records are never moved, deleted or replaced by this change.
+
+0.6.1 修正：SaveId 仅用于 GUID 隔离，生成位置改为八个固定偏移。地形检测失败只在同一点重试，不换位置。原生存档中已有植株的位置不作迁移、删除或替换。

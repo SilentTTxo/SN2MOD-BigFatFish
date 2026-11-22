@@ -1,4 +1,4 @@
--- Big Fat Fish v0.6.0: view-relative wing formation and SaveId-scoped recovery.
+-- Big Fat Fish v0.6.1: view-relative wing formation and SaveId-scoped recovery.
 local UEHelpers = require("UEHelpers")
 local dir = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])")
 local config = dofile(dir .. "config.lua")
@@ -301,7 +301,7 @@ local callbacks = {
         Gaze.enabled = mode == "on"; log("Head/eye tracking=" .. tostring(Gaze.enabled))
     end,
     bigfatfish_status = function()
-        log("v0.6.0; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY") .. '; feeding=' .. Feeding.status())
+        log("v0.6.1; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY") .. '; feeding=' .. Feeding.status())
         for _, f in ipairs(state.fish) do log("ID=" .. f.id .. " size=" .. string.format("%.2fx", f.size) .. " mode=" .. f.mode .. " gaze=" .. tostring(f.gazeActive == true) .. " valid=" .. tostring(valid(f.actor))) end
     end,
 }
@@ -313,4 +313,4 @@ for name, callback in pairs(callbacks) do
         return true
     end)
 end
-log("Big Fat Fish v0.6.0 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")
+log("Big Fat Fish v0.6.1 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")

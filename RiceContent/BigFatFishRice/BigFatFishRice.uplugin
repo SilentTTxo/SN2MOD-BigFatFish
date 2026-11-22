@@ -1,7 +1,7 @@
 {
   "FileVersion": 3,
-  "Version": 5,
-  "VersionName": "0.4.0-prototype",
+  "Version": 6,
+  "VersionName": "0.4.1-prototype",
   "FriendlyName": "Big Fat Fish - Rice",
   "Description": "Native rice planting prototype",
   "Category": "Mods",
@@ -10,7 +10,7 @@
   "EnabledByDefault": true,
   "Installed": true,
   "IsBetaVersion": true,
-  "SemVersion": "0.4.0",
+  "SemVersion": "0.4.1",
   "RequiredOnRemote": false,
   "LocalizationTargets": [
     {

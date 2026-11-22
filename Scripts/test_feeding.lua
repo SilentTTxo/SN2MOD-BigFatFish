@@ -42,7 +42,7 @@ local function drop()
  function item:GetWorld()return world end
  function item:GetAddress()return self.address end
  function item:IsEquipped()return self.owned end
- function item:IsOwned()return self.owned end
+ function item:IsOwned()error('Native IsOwned crashes when a dropped item has Owner=nil; must never be called')end
  function item:IsHidden()return false end
  function item:GetAttachParentActor()end
  function item:K2_GetActorLocation()return {X=90,Y=0,Z=-25}end
@@ -58,6 +58,9 @@ local function step(seconds)
  end
 end
 step(5);assert(#fishs==0,'Eating has no dropped actor and cannot summon')
+local held=drop();held.Owner={IsValid=valid};step(4)
+assert(#fishs==0,'An actor with an owner is not a world offering')
+held.live=false
 local a=drop();step(2.9);assert(#fishs==0)
 a.owned=true;step(2);assert(#fishs==0,'Picked up before three seconds')
 a.owned=false;step(3.2);assert(#fishs==1 and a.live)

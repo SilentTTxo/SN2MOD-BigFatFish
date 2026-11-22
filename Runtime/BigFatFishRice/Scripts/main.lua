@@ -110,7 +110,7 @@ end)
 RegisterConsoleCommandHandler("bigfatfish_rice_status", function()
     run(function()
         local item = itemType()
-        log("v0.4.0-prototype; native rice item mounted=" .. tostring(valid(item)))
+        log("v0.4.1-prototype; native rice item mounted=" .. tostring(valid(item)))
         if valid(item) then log("Inventory rice grain=" .. playerInventory():GetItemCountByType(item)) end
         discoverGrowers();log('Sea Rice plants in this world='..#growers)
         for index,plant in ipairs(growers) do
@@ -134,4 +134,4 @@ RegisterConsoleCommandHandler("bigfatfish_rice_status", function()
     end)
     return true
 end)
-log("v0.4.0-prototype loaded. Commands: bigfatfish_rice_give [count], bigfatfish_rice_status")
+log("v0.4.1-prototype loaded. Commands: bigfatfish_rice_give [count], bigfatfish_rice_status")

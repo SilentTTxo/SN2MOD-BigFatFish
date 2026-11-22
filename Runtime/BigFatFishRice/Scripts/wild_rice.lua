@@ -1,6 +1,6 @@
 -- Deterministic native dynamic-item GUIDs prevent duplicate wild populations.
 local M={}
-local D,session,stable,done,attempts,lastScan
+local D,session,stable,done,lastScan
 local function valid(o) return o~=nil and o:IsValid() end
 local function text(value) return type(value)=='string' and value or value:ToString() end
 function M.configure(deps) D=deps end
@@ -13,6 +13,18 @@ function M.guid(id,index)
  local key='BigFatFishSeaRiceV1:'..id..':'..index
  return {A=hash(key,237),B=hash(key,581),C=hash(key,936),D=hash(key,401)}
 end
+-- Fixed offsets in centimetres. SaveId only namespaces persistence GUIDs; it
+-- never randomizes positions. Missing terrain retries the SAME vertical ray.
+local offsets={
+ {X=2800,Y=1400},{X=2920,Y=1450},
+ {X=-3200,Y=1800},{X=-3320,Y=1850},
+ {X=-1800,Y=-3000},{X=-1680,Y=-2950},
+ {X=1800,Y=-3400},{X=1920,Y=-3350},
+}
+function M.position(center,index)
+ local o=offsets[index]
+ return {X=center.X+o.X,Y=center.Y+o.Y,Z=center.Z}
+end
 function M.poll()
  local pc=D.player();if not valid(pc) or not valid(pc.Pawn) then session=nil;return end
  local pawn=pc.Pawn;local world=pawn:GetWorld();if not valid(world) or not pawn:HasAuthority() then return end
@@ -23,7 +35,7 @@ function M.poll()
  local id=text(guidlib:Conv_GuidToString(valid(collection) and collection.ContainerInfo.SaveId or active.MetaData.SaveId))
  if id:gsub('[0%-]','')=='' then return end
  local key=tostring(world:GetAddress())..id
- if session~=key then session=key;stable=0;done={};attempts={};lastScan=nil end
+ if session~=key then session=key;stable=0;done={};lastScan=nil end
  stable=stable+1;if stable<20 then return end -- wait for native save proxies and terrain
  local complete=0;for i=1,8 do if done[i] then complete=complete+1 end end
  if complete==8 then return end
@@ -60,12 +72,8 @@ function M.poll()
   local guid=M.guid(id,index);local guidText=text(guidlib:Conv_GuidToString(guid))
   if ids[guidText] then done[index]=true end
   if not done[index] then
-   local patch=math.floor((index-1)/2);local seed=hash(id,patch+1)
-   local angle=patch*math.pi/2+(seed%1000)/1000*.8
-   local trial=attempts[index] or 0
-   local radius=2500+(seed+trial*237)%2500;local offset=index%2*100
-   angle=angle+trial*.12;attempts[index]=trial+1
-   local x,y=center.X+math.cos(angle)*radius+offset,center.Y+math.sin(angle)*radius
+   local position=M.position(center,index)
+   local x,y=position.X,position.Y
    local hit={}
    local ok=system:LineTraceSingleForObjects(pawn,{X=x,Y=y,Z=center.Z+1500},{X=x,Y=y,Z=center.Z-12000},{0},false,{pod,pawn},0,hit,true,{R=0,G=0,B=0,A=0},{R=0,G=0,B=0,A=0},0)
    if ok and hit.ImpactNormal.Z>.7 and hit.ImpactPoint.Z<center.Z-100 then
@@ -75,6 +83,6 @@ function M.poll()
    end
   end
  end
- if created>0 then D.log('Registered '..created..' wild Sea Rice plants in native dynamic-item saves near the lifepod.') end
+ if created>0 then D.log('Registered '..created..' wild Sea Rice plants at FIXED lifepod offsets in native dynamic-item saves.') end
 end
 return M

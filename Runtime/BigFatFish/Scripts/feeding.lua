@@ -19,7 +19,9 @@ local function asset(package,name)
 end
 local function eligible(item,world)
  return valid(item) and valid(item:GetWorld()) and item:GetWorld():GetAddress()==world:GetAddress()
-  and not item:IsEquipped() and not item:IsOwned() and not item.bHidden
+  -- CL-131439 IsOwned dereferences Actor.Owner without a null guard. A real
+  -- dropped item has Owner=nil, so never call that native query here.
+  and not valid(item.Owner) and not item:IsEquipped() and not item.bHidden
   and not valid(item:GetAttachParentActor())
 end
 function Feeding.configure(deps) D=deps end
