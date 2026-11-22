@@ -27,6 +27,7 @@
 !/Docs/BigFatFish_User_Guide_EN_ZH.md
 !/Docs/BigFatFish_Nexus_Description_EN_ZH.md
 !/Docs/BigFatFish_Rice_Prototype_EN_ZH.md
+!/Docs/BigFatFish_Model_Inventory_EN_ZH.md
 
 !/SourceAssets/
 /SourceAssets/*
@@ -36,6 +37,7 @@
 !/SourceAssets/Rice/
 /SourceAssets/Export/*
 !/SourceAssets/Export/WhaleGirl_Swim.fbx
+!/SourceAssets/Export/BigFatFish_GrabEat.fbx
 !/SourceAssets/Export/WhaleGirl_Swim.glb
 !/SourceAssets/Export/Textures/
 

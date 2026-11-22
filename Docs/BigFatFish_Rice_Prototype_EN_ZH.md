@@ -1,14 +1,14 @@
 # Big Fat Fish — Sea Rice / 海稻
 
-Version / 版本：0.2.0-prototype · Windows Steam，UE 5.6.1，CL-131439。
+Version / 版本：0.3.0-prototype · Windows Steam，UE 5.6.1，CL-131439。
 
-增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.4.2 更新修复眨眼、嘴型启用时脸部材质回退的问题。
+增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.5.0 更新修复眨眼、嘴型启用时脸部材质回退的问题。
 
-Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.4.2 update fixes face materials falling back when blink or mouth morphs activate.
+Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.5.0 update fixes face materials falling back when blink or mouth morphs activate.
 
-种植和采收已由玩家验收。新版外观、米饭制作/食用、再次结穗和存档恢复仍需游戏内验证。大白饭召唤大肥鱼尚未接入。
+种植、采收、大白饭制作已由玩家验收。本版修正网格仍绑定灰色默认材质的问题、原生生长提示键及顶部稻穗定位，并接入大白饭抢饭召唤；这些修改的游戏内效果仍待验收。
 
-Planting and harvesting have been accepted by the player. Updated visuals, crafting/consumption, regrowth, and save restoration still need in-game validation. Summoning a fish with Steamed Rice is not implemented yet.
+Planting, harvesting and Steamed Rice crafting have been accepted by the player. This version repairs default-gray material bindings, the growth hint key and the crown anchor, and adds rice-based fish summoning. The changes still require in-game validation.
 
 ## 依赖 / Requirement
 
@@ -32,12 +32,26 @@ bigfatfish_rice_status
 1. 背包获得 `Sea Rice Grain / 海稻谷`。 / Receive Sea Rice Grain in your inventory.
 2. 在建造器的原版种植/植物分类选择 `Sea Rice / 海稻`，消耗 1 份海稻谷栽种在原版种植槽上。 / Choose Sea Rice in the builder's farming/plants category and spend one grain to plant it on a native planter.
 3. 等待约 60 秒采收成熟稻穗；60 秒为测试周期。 / Harvest ripe panicles after roughly 60 seconds; this duration is provisional for testing.
-4. 在装配台的餐食分类寻找 `Steamed Rice / 大白饭`。1 份海稻谷 + 1 瓶水 → 1 碗大白饭，制作时间 5 秒。物品配置为可从背包食用，食物 +25、水分 +5，实际效果待验收。 / Find Steamed Rice in the fabricator's Meals category. One Sea Rice Grain + one bottle of Water yields one bowl in five seconds. It is configured as inventory-consumable with +25 food and +5 water; actual behavior needs validation.
+4. 在装配台的餐食分类寻找 `Steamed Rice / 大白饭`。1 份海稻谷 + 1 瓶水 → 1 碗大白饭，制作时间 5 秒。新版大白饭用于喂鱼，不再给玩家增加饱食度或水分。 / Find Steamed Rice in the fabricator's Meals category. One Sea Rice Grain + one bottle of Water yields one bowl in five seconds. It is now an offering for the fish, without restoring player food or water.
 5. 使用游戏自身的保存，分别检查生长中、成熟、采收后和制作米饭后的保存/重载。 / Use the game's save function and check save/reload while growing, when ripe, after harvesting, and after crafting rice.
 
-旧版已存在的稻穗如位置异常，先采收一次并等待重新结穗，或对比新栽的海稻；更新保留原有资源 ID，不会主动删除植株或背包物品。
+更新保留原有资源 ID。顶部定位修正也会处理当前世界中已存在且仍归属植株的稻穗，不移动已采收/掉落的物品。
 
-If panicles created by the previous version are misplaced, harvest once and wait for regrowth, or compare with a newly planted crop. Asset IDs are retained; the update does not delete plants or inventory items.
+Asset IDs are retained. Crown anchoring also corrects existing panicles still owned by a grower; harvested or dropped items are not repositioned.
+
+## 大白饭召唤 / Summoning with rice
+
+使用 Big Fat Fish 0.5.0 完整包。大白饭制作配方不变；在背包使用一碗大白饭，会显示饭碗，一只新鲸鱼娘从玩家身后绕到前方，伸手抢走、吃饭，随后加入跟随。
+
+Use the complete Big Fat Fish 0.5.0 package. The crafting recipe is unchanged. Using Steamed Rice shows a bowl; a new companion swims from behind the player, reaches for the bowl, eats, and joins formation following.
+
+约 1.6 秒抢到饭时才扣除 1 份，约 4.8 秒完成。过程中再次使用不会再扣物品；启动失败或抢到前缺少米饭则取消。单机/本地主角逻辑已做离线检查，联网行为未验收。动画对位、游戏内使用入口及演出需实机验收。
+
+One serving is deducted at the grab around 1.6 seconds, and the sequence finishes around 4.8 seconds. Repeated uses during an active sequence spend no additional rice. Missing food or startup failure cancels the arrival. Local-player transaction logic has offline coverage; multiplayer, the in-game use entry point and visual alignment remain unverified.
+
+吃完后使用游戏保存，保存新同伴。临时饭碗不写入大肥鱼 JSON，尚未抢到饭的新鱼也不会写入同伴存档。
+
+Save the game after feeding to keep the companion. Temporary bowls are not written to the companion JSON, and an unpaid arrival is not persisted as a companion.
 
 ## 保存 / Saving
 

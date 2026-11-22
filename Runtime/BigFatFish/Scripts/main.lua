@@ -1,4 +1,4 @@
--- Big Fat Fish v0.4.2: view-relative wing formation and SaveId-scoped recovery.
+-- Big Fat Fish v0.5.0: view-relative wing formation and SaveId-scoped recovery.
 local UEHelpers = require("UEHelpers")
 local dir = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])")
 local config = dofile(dir .. "config.lua")
@@ -6,6 +6,7 @@ local Storage = dofile(dir .. "storage.lua")
 local Save = dofile(dir .. "save_adapter.lua")
 local Gaze = dofile(dir .. "gaze.lua")
 local Face = dofile(dir .. "face.lua")
+local Feeding = dofile(dir .. "feeding.lua")
 Face.configure(dofile(dir .. "face_morphs.lua"), UEHelpers.FindOrAddFName)
 local saveDirectory = (os.getenv("LOCALAPPDATA") or "") .. "/Subnautica2/Saved/SaveGames/BigFatFish"
 local state = {fish = {}, nextId = 1, paused = false, stable = 0}
@@ -28,6 +29,7 @@ local function playerContext()
     return pc, pc.Pawn, world
 end
 local function destroyInstances()
+    Feeding.cancel()
     for _, fish in ipairs(state.fish) do
         if valid(fish.actor) then fish.actor:K2_DestroyActor() end
     end
@@ -57,11 +59,12 @@ local function instantiate(record, world, cls)
     record.velocity = {X = 0, Y = 0, Z = 0}
     state.fish[#state.fish + 1] = record
     state.nextId = math.max(state.nextId, record.id + 1)
+    return record
 end
 local function snapshot()
     local records = {}
     for _, f in ipairs(state.fish) do
-        if valid(f.actor) then
+        if valid(f.actor) and not Feeding.isUnpaid(f) then
             records[#records + 1] = {id = f.id, position = copy(f.position), center = copy(f.center),
                 yaw = f.yaw, phase = f.phase, startAngle = f.startAngle, mode = f.mode, size = f.size}
         end
@@ -204,8 +207,12 @@ local function update()
         if valid(f.actor) then
             local now = f.actor:GetGameTimeSinceCreation()
             local dt = math.max(0, math.min(now - f.lastTime, 0.2)); f.lastTime = now
-            if not state.paused then
-                if f.mode == "wander" then
+            if not state.paused or Feeding.isActive(f) then
+                local feeding=Feeding.update(f,dt,targetOrigin,viewRotation,world)
+                if not valid(f.actor) then goto nextFish end
+                if feeding then
+                    -- Feeding supplies the position/yaw during the short arrival.
+                elseif f.mode == "wander" then
                     f.phase = f.phase + dt * config.SwimSpeedCmPerSecond / config.PatrolRadiusCm
                     local angle = f.startAngle + f.phase
                     f.position = {X = f.center.X + config.PatrolRadiusCm * math.cos(angle),
@@ -226,6 +233,7 @@ local function update()
                 f.gazeError = tostring(active); log("Gaze ID=" .. f.id .. ": " .. f.gazeError)
             end
         end
+        ::nextFish::
     end
 end
 local function guarded(callback)
@@ -236,6 +244,26 @@ local function guarded(callback)
         if ok then lastError = nil end
     end
 end
+Feeding.configure({ready=ready,name=UEHelpers.FindOrAddFName,log=log,
+    canSpawn=function() return #state.fish<config.MaxFish and not state.readOnly end,
+    spawn=function(position,yaw)
+        local _,_,world=ready();assert(world,'Game world is not ready')
+        return instantiate({id=state.nextId,size=.5+math.random(),position=position,yaw=yaw,
+            center=copy(position),startAngle=0,phase=0,mode='follow'},world,assert(loadClass(),'Fish class is unavailable'))
+    end,
+    remove=function(fish)
+        if valid(fish.actor) then fish.actor:K2_DestroyActor() end
+        for i,f in ipairs(state.fish) do if f==fish then table.remove(state.fish,i);break end end
+    end})
+RegisterCustomEvent('K2_ActivateAbility',function(context)
+    local ability=context:get()
+    if not valid(ability) or ability:GetClass():GetFullName()~='BlueprintGeneratedClass /BigFatFishRice/Blueprints/GA_BFF_OfferRice.GA_BFF_OfferRice_C' then return end
+    local avatar=ability:GetAvatarActorFromActorInfo()
+    gameThread(function()
+        local ok,message=Feeding.request(avatar)
+        if not ok then log(message) end
+    end)
+end)
 LoopInGameThreadAfterFrames(1, guarded(update))
 LoopInGameThreadWithDelay(500, guarded(poll))
 Save.registerSaveCompleted(function()
@@ -260,7 +288,7 @@ local callbacks = {
         Gaze.enabled = mode == "on"; log("Head/eye tracking=" .. tostring(Gaze.enabled))
     end,
     bigfatfish_status = function()
-        log("v0.4.2; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY"))
+        log("v0.5.0; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY") .. '; feeding=' .. Feeding.status())
         for _, f in ipairs(state.fish) do log("ID=" .. f.id .. " size=" .. string.format("%.2fx", f.size) .. " mode=" .. f.mode .. " gaze=" .. tostring(f.gazeActive == true) .. " valid=" .. tostring(valid(f.actor))) end
     end,
 }
@@ -272,4 +300,4 @@ for name, callback in pairs(callbacks) do
         return true
     end)
 end
-log("Big Fat Fish v0.4.2 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")
+log("Big Fat Fish v0.5.0 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")

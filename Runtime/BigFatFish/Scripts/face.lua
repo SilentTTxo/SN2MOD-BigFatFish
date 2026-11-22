@@ -39,6 +39,7 @@ function Face.update(fish, dt)
         if t <= 1 then mouth = f.mouthAmplitude * math.sin(math.pi * t) ^ 2
         else f.mouthStart = nil end
     end
+    if fish.feedMouth then mouth=fish.feedMouth end
     mesh:SetMorphTarget(names.blink, blink, true)
     mesh:SetMorphTarget(names.mouthOpen, mouth, true)
     mesh:SetMorphTarget(names.mouthRound, mouth * 0.25, true)

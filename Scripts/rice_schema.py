@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 ROOTS = [
+    "/Script/UWEAbilitySystem.UWEGameplayAbility",
     "/Script/UWEInventory.UWEBaseItem", "/Script/UWEInventory.UWEItemType",
     "/Script/UWECrafting.UWECraftingRecipe", "/Script/Subnautica2.SN2BuilderConstructActionData",
     "/Script/UWEFarming.UWEPlantGrowerComponent", "/Script/UWEFarming.UWESeedGrowerComponent",

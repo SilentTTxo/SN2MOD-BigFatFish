@@ -1,0 +1,104 @@
+{
+  "version": "0.5.0-dev",
+  "archive": "BigFatFish-0.5.0-dev.zip",
+  "size_bytes": 6145833,
+  "sha256": "7c0a855cbb0346a02a832a2e1a3f7b5f081954b33e61f317eca3618355ffb668",
+  "files": [
+    {
+      "path": "BigFatFish_Model_Inventory_EN_ZH.md",
+      "sha256": "e3a331b01c68d879fa31a5ba8c02abaddc7cfea95af9b5116dff8854cea562b3"
+    },
+    {
+      "path": "BigFatFish_Rice_Prototype_EN_ZH.md",
+      "sha256": "3144a0243e217dedcff8a96bc21c393752a328c607c422ba325cdee99f113ebc"
+    },
+    {
+      "path": "BigFatFish_User_Guide_EN_ZH.md",
+      "sha256": "1ac774e4289b6e9b4688dbd24da3b231d3765279f6936d4c9660e8710f2046e1"
+    },
+    {
+      "path": "README.txt",
+      "sha256": "4c087a76d7637b7e786d36240e7defce286bfe96c995a66e0383eb19beba80ff"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/config.lua",
+      "sha256": "5d7fe6bdfbbb6b63e32d88960d1a45a9bc0934fcdbcb1422f230d68c72655526"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/face.lua",
+      "sha256": "66fe7f11e59bab530b17362f6bdb2052cc74d8dab721c9a653d3a6f06abe7ffe"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/face_morphs.lua",
+      "sha256": "6663e6dbae60225f6a3864c7e1e2fc43138e7638f84337f646b9b0f30951b2c2"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/feeding.lua",
+      "sha256": "5dee5f9d5213c8901a9787dac44ae8ec5b76b9936db8b017c2747a0a8646a925"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/gaze.lua",
+      "sha256": "707b8e696205d6b421853c7064f99eb91651febad88a095ddb6346c24b151ebd"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/json.LICENSE",
+      "sha256": "e91de14a15c126e70df8d30132529199211b47c5c899f82285a2ee943748f6f2"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/json.lua",
+      "sha256": "23031288e528880354d3d4651a9dc299b4c85e28889d9f5ae1dcca76b3cdc8b1"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/main.lua",
+      "sha256": "97e63ffc748ce7ce20267346aece775303b1ac1ae1b03ed540a77311d100b63e"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/save_adapter.lua",
+      "sha256": "a0ca3f000c0b621f65a59bf8c5420ae08b7f4f17cb08519a1c097edec519620e"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/Scripts/storage.lua",
+      "sha256": "82d922cfd84ad5c8ba636ba91b2afefabdee431062e9026b04116f10bace975b"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFish/enabled.txt",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFishRice/Scripts/main.lua",
+      "sha256": "d940d25283bbea7146343051fa1722846ca0bf43a3a97ceda1590840ce6abd30"
+    },
+    {
+      "path": "Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFishRice/enabled.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "Subnautica2/Content/Paks/LogicMods/BigFatFish/BigFatFish.pak",
+      "sha256": "8880ffa70d259e608dee0e6c67f7bf5959f73b0fcc04ee57f1d1497d537624eb"
+    },
+    {
+      "path": "Subnautica2/Content/Paks/LogicMods/BigFatFish/BigFatFish.ucas",
+      "sha256": "8b9273ba8c4e88ba1990d26f8bc392a86da8a6ee15b4afd99d619f82b99c8539"
+    },
+    {
+      "path": "Subnautica2/Content/Paks/LogicMods/BigFatFish/BigFatFish.utoc",
+      "sha256": "1990550e431ded231ab83efe275fbf0f6d1640f253b4baa6a44df36b8442076a"
+    },
+    {
+      "path": "Subnautica2/Mods/BigFatFishRice/BigFatFishRice.uplugin",
+      "sha256": "eb35f4f65fa4530b900b90b5844027e24676d2ee072980911f6c6a15a84cb599"
+    },
+    {
+      "path": "Subnautica2/Mods/BigFatFishRice/Content/Paks/Windows/BigFatFishRiceSubnautica2-Windows.pak",
+      "sha256": "31db792570e7704b7483a358f1a933c3faf129dee1d7d14ee1bd1b48851dcc58"
+    },
+    {
+      "path": "Subnautica2/Mods/BigFatFishRice/Content/Paks/Windows/BigFatFishRiceSubnautica2-Windows.ucas",
+      "sha256": "66dcfcf4b1aa73abf231b3f3be6c8ab9c386ca3dd5e9339a07b9016959da5744"
+    },
+    {
+      "path": "Subnautica2/Mods/BigFatFishRice/Content/Paks/Windows/BigFatFishRiceSubnautica2-Windows.utoc",
+      "sha256": "1ab8cb7595418bc9ac65777878b030ed6587259b8ceae25b1386e028a9477736"
+    }
+  ]
+}

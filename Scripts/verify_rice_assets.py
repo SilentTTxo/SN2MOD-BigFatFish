@@ -38,7 +38,11 @@ for handle in sub.k2_gather_subobject_data_for_blueprint(bp):
     obj=lib.get_object_for_blueprint(lib.get_data(handle),bp)
     if obj:components[obj.get_name().removesuffix('_GEN_VARIABLE')]=obj
 grower=components['RiceSeedGrower']
-assert abs(grower.get_editor_property('OffsetLocation').z-72)<.01
+assert abs(grower.get_editor_property('relative_location').z-72)<.01
+assert abs(grower.get_editor_property('OffsetLocation').z)<.01
+assert grower.get_editor_property('SeedProgressPrimaryHintKey')=='FarmableProgressPercent'
+assert unreal.load_asset('/Game/StringTables/ST_WorldObjectHint')
+assert unreal.StringTableLibrary.is_registered_table_entry(unreal.Name('/Game/StringTables/ST_WorldObjectHint.ST_WorldObjectHint'),'FarmableProgressPercent')
 assert abs(grower.get_editor_property('RipenTime')-60)<.01
 assert 'BP_BFF_RiceHarvest' in str(grower.get_editor_property('SeedClass'))
 assert components['RiceSave'].get_class().get_path_name()=='/Script/UWESaveSystem.UWESaveComponent'
@@ -54,8 +58,9 @@ for name in ('BP_BFF_RiceGrain','BP_BFF_RiceHarvest'):
     export(cdo,name)
 cooked=unreal.load_asset(BASE+'/Data/DA_BFF_CookedRice_ItemType');assert cooked
 cooked_text=export(cooked,'cooked_item')
-assert 'GA_Consume_C' in cooked_text and 'bUseFromInventory=True' in cooked_text
-assert 'ItemType.TunableData.Food' in cooked_text
+assert 'GA_BFF_OfferRice_C' in cooked_text and 'bUseFromInventory=True' in cooked_text
+assert 'ItemType.TunableData.Food' not in cooked_text
+assert 'GA_Consume_C' not in cooked_text
 meal=unreal.load_asset(BASE+'/Data/DA_BFF_CookedRice_Recipe');assert meal
 meal_text=export(meal,'cooked_recipe')
 for value in ('DA_SustenanceMeals','DA_BFF_RiceGrain_ItemType','DA_Water_ItemType','DA_BFF_CookedRice_ItemType'):
@@ -69,9 +74,21 @@ for name in ('RiceStem','RiceLeaf','RiceGrain','RiceGrainLight','RiceBowl','Cook
     material=unreal.load_asset(BASE+'/Materials/M_'+name);assert material
     material_text=export(material,'material_'+name)
     assert 'T_BFF_'+name+'_Color' in material_text,name
+for name in ('SM_BFF_RicePlant','SM_BFF_RiceStalk','SM_BFF_RicePanicle','SM_BFF_RiceGrain','SM_BFF_CookedRice','SM_BFF_EmptyRiceBowl'):
+    mesh=unreal.load_asset(BASE+'/Meshes/'+name);assert mesh
+    for index,slot in enumerate(mesh.get_editor_property('static_materials')):
+        expected=unreal.load_asset(BASE+'/Materials/M_'+str(slot.get_editor_property('imported_material_slot_name')))
+        assert expected and mesh.get_material(index)==expected,(name,index)
+for name in ('BP_BFF_RiceGrain','BP_BFF_RiceHarvest','BP_BFF_CookedRice'):
+    cdo=unreal.get_default_object(unreal.load_asset(BASE+'/Blueprints/'+name).generated_class())
+    comp=cdo.get_editor_property('Mesh');mesh=comp.get_editor_property('static_mesh')
+    for index,slot in enumerate(mesh.get_editor_property('static_materials')):
+        assert comp.get_material(index)==mesh.get_material(index),(name,index)
+assert unreal.load_asset(BASE+'/Blueprints/GA_BFF_OfferRice')
+assert unreal.load_asset(BASE+'/Blueprints/BP_BFF_RiceServing')
 report.update(status='PASS: persisted native rice item, builder recipe, planter rules, growth, save/replication components and pickups',
               components={name:obj.get_class().get_path_name() for name,obj in components.items()},
-              ripening_seconds=60,panicle_anchor_cm=72,version='0.2.0-prototype',
-              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.2.0 visuals, cooking and save/reload await game test')
+              ripening_seconds=60,panicle_anchor_cm=72,version='0.3.0-prototype',
+              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.3.0 visuals, cooking and save/reload await game test')
 (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
 print('RICE_VALIDATION_PASS',json.dumps(report),flush=True)

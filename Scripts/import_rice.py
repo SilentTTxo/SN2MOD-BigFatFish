@@ -66,7 +66,7 @@ def save(obj):
 def main():
     print('RICE_BUILD_START',flush=True)
     meshes={}
-    for name in ('SM_BFF_RicePlant','SM_BFF_RiceStalk','SM_BFF_RicePanicle','SM_BFF_RiceGrain','SM_BFF_CookedRice'):
+    for name in ('SM_BFF_RicePlant','SM_BFF_RiceStalk','SM_BFF_RicePanicle','SM_BFF_RiceGrain','SM_BFF_CookedRice','SM_BFF_EmptyRiceBowl'):
         task=unreal.AssetImportTask();task.filename=str(ROOT/'SourceAssets/Rice/Export'/(name+'.fbx'))
         task.destination_path=BASE+'/Meshes';task.destination_name=name
         task.automated=True;task.replace_existing=True;task.save=True
@@ -111,9 +111,13 @@ def main():
         graph.recompile_material(material);save(material);materials[name]=material
     for mesh in meshes.values():
         slots=mesh.get_editor_property('static_materials')
-        for slot in slots:
-            slot.set_editor_property('material_interface',materials[str(slot.get_editor_property('imported_material_slot_name'))])
-        mesh.set_editor_property('static_materials',slots);save(mesh)
+        # Iterating a reflected struct array yields copies; changing a slot does
+        # not mutate the mesh. Use the mesh API and verify the actual binding.
+        for index,slot in enumerate(slots):
+            material=materials[str(slot.get_editor_property('imported_material_slot_name'))]
+            mesh.set_material(index,material)
+            assert mesh.get_material(index)==material,(mesh.get_name(),index)
+        save(mesh)
     task=unreal.AssetImportTask();task.filename=str(ROOT/'SourceAssets/Rice/Export/T_BFF_RiceGrain.png')
     task.destination_path=BASE+'/Textures';task.automated=True;task.replace_existing=True;task.save=True
     tools.import_asset_tasks([task]);icon=unreal.load_asset(BASE+'/Textures/T_BFF_RiceGrain');assert icon
@@ -149,10 +153,11 @@ def main():
     grower,_=component(plant,'RiceSeedGrower',cls('/Script/UWEFarming.UWESeedGrowerComponent'))
     for key,value in {'SeedClass':harvest.generated_class(),'bStartsGrown':False,'HighPrioritySpawn':True,
                       'SpawnRate':0.,'SpawnTimeVariance':0.,'RipenTime':60.,'ShowRipeningProgress':True,
-                      'SeedProgressFormatText':unreal.Text('{0}%'),'SeedProgressPrimaryHintKey':'BFFRiceGrowth'}.items():
+                      'SeedProgressFormatText':unreal.Text('Sea Rice / 海稻：{0}%'),'SeedProgressPrimaryHintKey':'FarmableProgressPercent'}.items():
         grower.set_editor_property(key,value)
     grower.set_editor_property('mobility',unreal.ComponentMobility.MOVABLE)
-    grower.set_editor_property('OffsetLocation',unreal.Vector(0,0,72))
+    grower.set_editor_property('relative_location',unreal.Vector(0,0,72))
+    grower.set_editor_property('OffsetLocation',unreal.Vector(0,0,0))
     component(plant,'RiceSeedReplication',cls('/Script/UWEFarming.UWESeedGrowerReplicatorComponent'))
     anchor,_=component(plant,'RicePlacementAnchor',cls('/Script/Subnautica2.UWEPlacementAnchor'))
     anchor.set_editor_property('UseForSamplePoints',True);anchor.set_editor_property('SampleRadius',10.)

@@ -60,6 +60,17 @@
       ],
       "material_slots": 7,
       "collision": "configured on native plant template during import"
+    },
+    {
+      "name": "SM_BFF_EmptyRiceBowl",
+      "triangles": 1248,
+      "dimensions_metres": [
+        0.14000000059604645,
+        0.14000000059604645,
+        0.054999999701976776
+      ],
+      "material_slots": 7,
+      "collision": "configured on native plant template during import"
     }
   ]
 }

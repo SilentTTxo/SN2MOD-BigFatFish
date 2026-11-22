@@ -1,3 +1,4 @@
+function RegisterCustomEvent() end
 -- Exercises the real runtime, save adapter and storage with mocked UE/disk APIs.
 local root = assert(arg[1], "Pass project directory")
 local dir = root .. "/Runtime/BigFatFish/Scripts/"

@@ -1,6 +1,6 @@
 # Big Fat Fish — Swimming Companions
 
-Version / 版本：0.4.2-dev
+Version / 版本：0.5.0-dev
 
 ## English
 
@@ -187,3 +187,9 @@ Unknown Worlds — Subnautica 2。
 
 本模组为玩家制作，与 Unknown Worlds 或 KRAFTON 无隶属关系，也未获其背书。 / A fan-made mod, not affiliated with or endorsed by Unknown Worlds or KRAFTON.
 
+
+### Sea Rice and feeding / 海稻与喂食
+
+The full 0.5.0 package adds a Sea Rice crop and Steamed Rice crafting (one grain + one Water, fabricator Meals category). Use a bowl to attract a companion that approaches from behind, grabs and eats, then follows. The crafting flow is accepted in-game; updated crop visuals and the new offering sequence await game testing.
+
+0.5.0 完整包加入海稻和大白饭配方（装配台餐食分类：1 份海稻谷 + 1 瓶水）。使用大白饭会吸引一只新伙伴从身后靠近，抢饭吃掉后跟随。制作流程已验收；新版海稻外观和抢饭演出仍待游戏内验证。

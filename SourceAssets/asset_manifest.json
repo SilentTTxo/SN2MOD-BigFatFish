@@ -115,5 +115,12 @@
       "bytes": 15678028,
       "sha256": "5b1a50164eaeba423115b9e3aeee555526f10ab0c0ce228bb0934c893a2d6655"
     }
+  },
+  "feeding_animation": {
+    "file": "BigFatFish_GrabEat.fbx",
+    "duration_seconds": 4.8,
+    "provenance": "New reach/grab/eat arm IK gesture baked over existing Quaternius swim retarget",
+    "sha256": "604819c068c966a2f51bc62d4d805436a96ecbde9d558934a6d10e6a77e65602",
+    "game_validation": "pending"
   }
 }

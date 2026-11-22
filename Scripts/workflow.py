@@ -85,6 +85,8 @@ def main():
             raise RuntimeError("Unreal import did not create its success report")
         if SETTINGS.get("gaze_enabled"):
             run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/build_gaze_animation.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
+        if SETTINGS.get('feeding_enabled'):
+            run([editor,project,'-run=pythonscript',f"-script={ROOT / 'Scripts/build_feeding_assets.py'}",'-ddc=InstalledNoZenLocalFallback','-unattended','-nop4','-nosplash','-stdout','-FullStdOutLogOutput'])
         return
     if options.action == "verify":
         run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/verify_unreal_assets.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])

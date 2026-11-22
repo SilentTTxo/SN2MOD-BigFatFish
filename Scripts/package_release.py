@@ -29,7 +29,7 @@ for extension in ("pak", "utoc", "ucas"):
 
 runtime = ROOT / "Runtime/BigFatFish"
 runtime_files = ["enabled.txt"] + [f"Scripts/{name}" for name in (
-    "main.lua", "config.lua", "gaze.lua", "face.lua", "face_morphs.lua",
+    "main.lua", "config.lua", "gaze.lua", "face.lua", "face_morphs.lua", "feeding.lua",
     "storage.lua", "save_adapter.lua", "json.lua", "json.LICENSE",
 )]
 assert {p.relative_to(runtime).as_posix() for p in runtime.rglob("*") if p.is_file()} == set(runtime_files)
@@ -38,6 +38,19 @@ for relative in runtime_files:
     add(runtime / relative, destination, game / destination)
 
 add(ROOT / "Docs/BigFatFish_User_Guide_EN_ZH.md", "BigFatFish_User_Guide_EN_ZH.md")
+if project.get('rice_enabled'):
+    rice = ROOT / 'Build/RiceStage/Windows/Subnautica2/Mods/BigFatFishRice'
+    for path in rice.rglob('*'):
+        if path.is_file():
+            destination='Subnautica2/Mods/BigFatFishRice/'+path.relative_to(rice).as_posix()
+            add(path,destination,game/destination)
+    rice_runtime=ROOT/'Runtime/BigFatFishRice'
+    for path in rice_runtime.rglob('*'):
+        if path.is_file():
+            destination='Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFishRice/'+path.relative_to(rice_runtime).as_posix()
+            add(path,destination,game/destination)
+    add(ROOT/'Docs/BigFatFish_Rice_Prototype_EN_ZH.md','BigFatFish_Rice_Prototype_EN_ZH.md')
+    add(ROOT/'Docs/BigFatFish_Model_Inventory_EN_ZH.md','BigFatFish_Model_Inventory_EN_ZH.md')
 readme = f"""Big Fat Fish {version}
 
 依赖 / Requirement: UE4SS

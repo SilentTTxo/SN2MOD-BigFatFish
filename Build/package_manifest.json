@@ -1,6 +1,6 @@
 {
   "status": "cooked_not_game_tested",
-  "mod_version": "0.4.2-dev",
+  "mod_version": "0.5.0-dev",
   "display_name": "Big Fat Fish",
   "game_engine": "5.6.1 (public branch, CL-131439)",
   "files": [
@@ -10,11 +10,11 @@
     },
     {
       "name": "BigFatFish.utoc",
-      "sha256": "da4ccd6a6f4ab9ff21d3584ecaefe134ba074279e6f0a7afd4ad863b3bb7bd16"
+      "sha256": "1990550e431ded231ab83efe275fbf0f6d1640f253b4baa6a44df36b8442076a"
     },
     {
       "name": "BigFatFish.ucas",
-      "sha256": "ea1f424ea5d06dc57a6e7e4fb9a3db1a89e67f8a5077f0639bd32d6bef915921"
+      "sha256": "8b9273ba8c4e88ba1990d26f8bc392a86da8a6ee15b4afd99d619f82b99c8539"
     }
   ]
 }

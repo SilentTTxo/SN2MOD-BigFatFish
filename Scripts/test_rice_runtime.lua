@@ -1,3 +1,6 @@
+function FindAllOf() return {} end
+function LoopInGameThreadWithDelay() end
+function LoopInGameThreadAfterFrames() end
 -- Exercise grant boundaries and native-content failure handling without touching saves.
 local root=assert(arg[1])
 local commands,logs={},{}
@@ -12,7 +15,7 @@ function inventory:AddItemTypeToInventory(value,count)
     if reject then return false end
     granted=granted+1;total=total+count;return true
 end
-local pawn={IsValid=function() return ready end,IsA=function(_,value) return value==character end,InventoryComponent=inventory}
+local pawn={GetWorld=function() return {IsValid=valid,GetAddress=function() return 1 end} end,IsValid=function() return ready end,IsA=function(_,value) return value==character end,InventoryComponent=inventory}
 local controller={IsValid=valid,Pawn=pawn}
 package.preload.UEHelpers=function()
     return {GetPlayerController=function() return controller end,FindOrAddFName=function(s) return s end}
@@ -39,5 +42,5 @@ loaded=false;commands.bigfatfish_rice_give("",{"2"});commands.bigfatfish_rice_st
 reject=true;commands.bigfatfish_rice_give("",{"2"});reject=false
 assert(total==8 and granted==2,"Unavailable inventory/content and rejected grant must not change count")
 commands.bigfatfish_rice_status()
-assert(logs[#logs]:find("Inventory rice grain=8",1,true))
+local found=false;for _,line in ipairs(logs) do if line:find("Inventory rice grain=8",1,true) then found=true end end;assert(found)
 output("PASS: rice grants once via native inventory; count limits; menu/content/capacity guards; status; no sidecar writes")

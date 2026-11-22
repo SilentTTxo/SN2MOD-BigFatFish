@@ -4,13 +4,13 @@ Swimming whale-girl companions for Subnautica 2, with formation following, head 
 
 为《深海迷航 2》添加鲸鱼娘外观的游泳伙伴，支持僚机跟随、头眼注视、随机眨眼、轻微嘴部动作、随机体型和存档保存。
 
-**Version / 版本:** `0.4.2-dev`
+**Version / 版本:** `0.5.0-dev`
 
-0.4.2 fixes gray face fallback during blinking/mouth animation by cooking morph-compatible material shaders. / 0.4.2 补齐表情变形材质着色器，修复眨眼、嘴型启用时脸部变灰的问题；待游戏内复测。
+0.5.0 fixes gray face fallback during blinking/mouth animation by cooking morph-compatible material shaders. / 0.5.0 补齐表情变形材质着色器，修复眨眼、嘴型启用时脸部变灰的问题；待游戏内复测。
 
 **Tested target / 已验证目标环境:** Windows Steam public branch / 正式分支，UE 5.6.1，CL-131439. Other game builds are unverified / 其他游戏版本未验证。
 
-[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.4.2-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
+[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.5.0-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
 
 ## English
 
@@ -122,20 +122,22 @@ bigfatfish_follow
 
 当前没有地形避障与碰撞，可能穿过地形和建筑；未接入捕捉、战斗、扫描、繁殖或原版生态系统。多人、Game Pass、Linux 和实验分支未验证。建议先召唤 1～5 只，64 是代码上限。
 
-## Sea Rice prototype / 海稻原型
+## Sea Rice and feeding / 海稻与抢饭召唤
 
-An optional `0.2.0-prototype` Sea Rice package is available on `feature/rice-growing`. It adds a native planter crop, harvestable grains, and Steamed Rice crafting at the fabricator (one grain + one Water). Planting and harvesting were accepted in-game in v0.1.0. The updated visuals, cooking/consumption, regrowth, and save restoration still need in-game validation. Rice-based fish summoning is not implemented yet.
+The complete `0.5.0-dev` package includes Sea Rice `0.3.0-prototype`. Plant and harvest rice, then craft Steamed Rice at the fabricator Meals category with one grain + one Water. Crafting has been accepted in-game. Using a bowl starts a newly authored 4.8-second behind-player arrival, grab and eating gesture, followed by companion formation. One serving is deducted on the grab; player nutrition is not restored.
 
-`feature/rice-growing` 分支提供可选海稻测试包：原生种植、采收和装配台大白饭配方（1 份海稻谷 + 1 瓶水）。上一版种植、采收已验收；新版外观、制作/食用、再次结穗和保存恢复待游戏内验证。大白饭召唤大肥鱼尚未接入。
+`0.5.0-dev` 完整包包含海稻 `0.3.0-prototype`：种植、采收后在装配台餐食分类用 1 份海稻谷 + 1 瓶水制作大白饭（制作已验收）。使用大白饭后，新伙伴从身后绕到前方抢饭、吃饭，然后加入跟随。抢到时扣除一份，不给玩家增加饱食/水分。
 
-[Rice prototype ZIP / 海稻测试包](Build/Releases/BigFatFishRice-0.2.0-prototype.zip) · [Test guide / 测试说明](Docs/BigFatFish_Rice_Prototype_EN_ZH.md)
+This update fixes meshes accidentally retaining WorldGridMaterial, uses the valid native farming hint, and anchors panicles at the crown, including existing growers. Resource checks and transaction tests pass; appearance, in-game activation, animation alignment, regrowth, saving and multiplayer still require relevant game tests.
+
+本版修复网格误绑灰色棋盘材质、缺失的生长提示键，并在运行时将植株所属稻穗固定在顶端，兼顾旧植株。资源和交易逻辑检查已通过；实际外观、使用触发、动作对位、再生长、保存恢复及联网仍待实机测试。
+
+[Sea Rice guide / 海稻说明](Docs/BigFatFish_Rice_Prototype_EN_ZH.md) · [Model animations and props / 模型动作与道具清单](Docs/BigFatFish_Model_Inventory_EN_ZH.md)
 
 ```text
 bigfatfish_rice_give 3
 bigfatfish_rice_status
 ```
-
-Plant through the native builder's farming/plants menu on a planter. / 使用建造器的原版种植/植物分类，在种植槽上栽种。
 
 ## Development / 开发
 

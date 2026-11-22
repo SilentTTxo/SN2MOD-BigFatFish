@@ -160,9 +160,13 @@ for i in range(95):
     bowl_geometry.grain((radius*math.cos(angle),radius*math.sin(angle),z),
                         (math.cos(angle+.8),math.sin(angle+.8),.1),.0015,5+(i%4==0))
 bowl=bowl_geometry.object('SM_BFF_CookedRice');bowl.hide_render=True
+empty_geometry=Geometry()
+for face,slot in zip(bowl_geometry.faces,bowl_geometry.slots):
+    if slot==4:empty_geometry.polygon([bowl_geometry.vertices[i] for i in face],slot)
+empty=empty_geometry.object('SM_BFF_EmptyRiceBowl');empty.hide_render=True
 
 manifest={"status":"sea rice refinement; original harvest flow accepted by user", "units":"metres; exported FBX converts to cm", "pivot":"stalk at soil; panicle at 72 cm crown", "panicle_anchor_cm":panicle_anchor*100,"smooth_normals":True, "provenance":"Original procedural geometry authored by Scripts/create_rice_assets.py; no external model or texture", "assets":[]}
-for obj in (plant,grain,stalk,panicle,bowl):
+for obj in (plant,grain,stalk,panicle,bowl,empty):
     bpy.ops.object.select_all(action="DESELECT");obj.select_set(True);bpy.context.view_layer.objects.active=obj
     bpy.ops.export_scene.fbx(filepath=str(EXPORT/(obj.name+".fbx")), use_selection=True, object_types={"MESH"},
         axis_forward="-Y",axis_up="Z",apply_unit_scale=True,add_leaf_bones=False,bake_anim=False)

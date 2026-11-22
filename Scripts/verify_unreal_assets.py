@@ -43,6 +43,14 @@ player=players[0].get_editor_property("node")
 assert player.get_editor_property("sequence")==animation
 assert player.get_editor_property("loop_animation")
 assert component.get_collision_enabled() == unreal.CollisionEnabled.NO_COLLISION
+settings=json.loads((ROOT/'project.json').read_text(encoding='utf8'))
+if settings.get('feeding_enabled'):
+    feeding=unreal.load_asset(BASE+'/Character/AN_BigFatFish_GrabEat')
+    assert isinstance(feeding,unreal.AnimSequence)
+    assert abs(feeding.get_editor_property('sequence_length')-4.8)<.05
+    assert feeding.get_editor_property('skeleton')==mesh.get_editor_property('skeleton')
+    feeding_slots=gaze.get_nodes_of_class(unreal.AnimGraphNode_Slot)
+    assert len(feeding_slots)==1 and str(feeding_slots[0].get_editor_property('node').get_editor_property('slot_name'))=='DefaultSlot'
 bounds = mesh.get_bounds()
 report = {
     "status": "persisted_assets_verified_not_game_tested",
