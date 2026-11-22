@@ -120,6 +120,21 @@ bigfatfish_follow
 
 当前没有地形避障与碰撞，可能穿过地形和建筑；未接入捕捉、战斗、扫描、繁殖或原版生态系统。多人、Game Pass、Linux 和实验分支未验证。建议先召唤 1～5 只，64 是代码上限。
 
+## Rice planting prototype / 水稻种植原型
+
+An optional `0.1.0-prototype` rice package is available on the `feature/rice-growing` branch. It adds native rice-grain items, a planter recipe in the builder menu, stalks, and harvestable panicles with a 60-second ripening cycle. Editor persistence checks, cooking, and game startup loading have passed; actual planting, harvesting, regrowth, and save/reload behavior still require in-game tests.
+
+`feature/rice-growing` 分支提供独立的水稻种植原型：原生稻谷物品、建造器种植配方、水稻植株与可采收稻穗，测试成熟周期为 60 秒。已通过编辑器资源重新加载检查、烹饪与游戏启动加载检查；实际栽种、采收、再次结穗及读档恢复仍待游戏内测试。
+
+[Rice prototype ZIP / 水稻测试包](Build/Releases/BigFatFishRice-0.1.0-prototype.zip) · [Test guide / 测试说明](Docs/BigFatFish_Rice_Prototype_EN_ZH.md)
+
+```text
+bigfatfish_rice_give 3
+bigfatfish_rice_status
+```
+
+Plant through the native builder's farming/plants menu on a planter. / 使用建造器的原版种植/植物分类，在种植槽上栽种。
+
 ## Development / 开发
 
 This repository includes the Lua runtime, the Blender source and exported model, this mod's editable Unreal assets, build scripts, offline tests, and the packaged ZIP. The engine, community modkit checkout, caches, downloads, logs, and personal saves are excluded.

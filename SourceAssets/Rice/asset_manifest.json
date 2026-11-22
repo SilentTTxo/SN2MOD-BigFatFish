@@ -1,0 +1,52 @@
+{
+  "status": "prototype geometry; native planting validation pending",
+  "units": "metres; exported FBX converts to cm",
+  "pivot": "soil/base origin",
+  "provenance": "Original procedural geometry authored by Scripts/create_rice_assets.py; no external model or texture",
+  "assets": [
+    {
+      "name": "SM_BFF_RicePlant",
+      "triangles": 5676,
+      "dimensions_metres": [
+        0.483015239238739,
+        0.4851835370063782,
+        0.8054308295249939
+      ],
+      "material_slots": 4,
+      "collision": "configured on native plant template during import"
+    },
+    {
+      "name": "SM_BFF_RiceGrain",
+      "triangles": 336,
+      "dimensions_metres": [
+        0.023244891315698624,
+        0.02384267747402191,
+        0.013447880744934082
+      ],
+      "material_slots": 4,
+      "collision": "configured on native plant template during import"
+    },
+    {
+      "name": "SM_BFF_RiceStalk",
+      "triangles": 636,
+      "dimensions_metres": [
+        0.483015239238739,
+        0.4851835370063782,
+        0.7593533396720886
+      ],
+      "material_slots": 4,
+      "collision": "configured on native plant template during import"
+    },
+    {
+      "name": "SM_BFF_RicePanicle",
+      "triangles": 5040,
+      "dimensions_metres": [
+        0.284086138010025,
+        0.2897604703903198,
+        0.25852954387664795
+      ],
+      "material_slots": 4,
+      "collision": "configured on native plant template during import"
+    }
+  ]
+}

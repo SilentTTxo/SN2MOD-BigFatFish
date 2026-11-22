@@ -1,0 +1,15 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0-prototype",
+  "FriendlyName": "Big Fat Fish - Rice",
+  "Description": "Native rice planting prototype",
+  "Category": "Mods",
+  "CreatedBy": "SilentTTxo",
+  "CanContainContent": true,
+  "EnabledByDefault": true,
+  "Installed": true,
+  "IsBetaVersion": true,
+  "SemVersion": "0.1.0",
+  "RequiredOnRemote": false
+}
