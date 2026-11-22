@@ -22,9 +22,9 @@
 | --- | --- | --- |
 | 眨眼 / Blinks | blink、blinkLeft、blinkRight | 仅双眼 blink 已导出。 / Combined blink only. |
 | 嘴型 / Mouth shapes | aa、ih、ou、ee、oh | aa、ou 已导出，其他尚未导入。 / aa and ou imported; others not imported. |
-| 情绪 / Emotions | happy、angry、sad、relaxed | 原包有形态，当前未导入。 / Present in the source, not imported. |
+| 情绪 / Emotions | happy、angry、sad、relaxed | happy、angry、sad 已导入并由手势触发；relaxed 未导入。 / happy, angry and sad are imported and triggered by emotes; relaxed is not imported. |
 | 眼神形态 / Gaze morphs | lookup、lookDown、lookleft、lookRight | 当前用骨骼追踪代替这些形态。 / The mod uses bone tracking instead. |
-| 饭盆形态 / Basin morph | TiePen，位于 hair 网格；有独立 TiePen 材质和 TiPen_Color_Studio 贴图 | 原包确实包含；当前导出未保留此形态开关。本次抢饭使用新制饭碗。 / Confirmed in the original; its morph toggle is not preserved in the current game export. Feeding uses the new bowl prop. |
+| 饭盆形态 / Basin morph | TiePen，位于 hair 网格；有独立 TiePen 材质和 TiPen_Color_Studio 贴图 | 已从原始 TiePen 形态提取独立饭盆，由大肥鱼双手捧着；鼓掌切换。 / Extracted from the original TiePen shape as a separate basin held in the fish’s hands; clap toggles it. |
 | VRM 弹簧骨 / VRM spring bones | 头发、耳部等的弹簧骨和碰撞配置 / Hair, ear and other spring/collider settings | 尚未移植为 UE 实时物理；不等于现成动作片段。 / Not ported to UE runtime physics; these are not animation clips. |
 
 原始 VRM 的 `animations` 列表为空，因此没有自带可直接播放的游泳、吃饭、跳舞动作。`neutral`、`surprised` 预设名称存在，但没有绑定对应形态；不能把它们计为已经可用的表情。
@@ -34,3 +34,5 @@ The original VRM has no animation clips. Its neutral and surprised preset names 
 Blender 工程还保存了 Quaternius 参考人形的多个动作，当前只有游泳完成了鲸鱼娘重定向；它们不能直接算作鲸鱼娘已经支持的动作。本版抢饭动作为项目自行制作的手臂动作叠加。
 
 The Blender scene also contains multiple Quaternius reference-mannequin clips. Only swimming was retargeted to this character; the other reference clips are not ready-to-use character actions. The feeding gesture is newly authored for this project.
+
+0.6.0 新增两秒手持饭盆循环，保留游泳身体动作并重制双臂捧盆姿态。饭盆不是原包自带的全身动作。 / 0.6.0 adds a two-second basin-hold loop, keeping the swimming body motion with newly posed arms. This is not an original full-body clip.

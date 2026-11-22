@@ -8,6 +8,7 @@ import unreal
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'Scripts'))
 from editor_property_import import set_properties
+from rice_localization import set_text
 BASE='/BigFatFishRice'
 OUT=ROOT/'Logs/rice';OUT.mkdir(parents=True,exist_ok=True)
 assets=unreal.EditorAssetLibrary
@@ -102,9 +103,9 @@ def main():
         specular=graph.create_material_expression(material,unreal.MaterialExpressionConstant)
         specular.set_editor_property('r',.3)
         assert graph.connect_material_property(specular,'',unreal.MaterialProperty.MP_SPECULAR)
-        glow=graph.create_material_expression(material,unreal.MaterialExpressionMultiply)
-        glow.set_editor_property('const_b',.035 if name.startswith('Rice') and name!='RiceBowl' else .008)
-        assert graph.connect_material_expressions(node,'RGB',glow,'A')
+        glow=graph.create_material_expression(material,unreal.MaterialExpressionConstant)
+        glow.set_editor_property('r',0.)
+        material.set_editor_property('shading_model',unreal.MaterialShadingModel.MSM_DEFAULT_LIT)
         assert graph.connect_material_property(glow,'',unreal.MaterialProperty.MP_EMISSIVE_COLOR)
         material.set_editor_property('two_sided',True)
         material.set_editor_property('used_with_instanced_static_meshes',True)
@@ -154,8 +155,9 @@ def main():
     grower,_=component(plant,'RiceSeedGrower',cls('/Script/UWEFarming.UWESeedGrowerComponent'))
     for key,value in {'SeedClass':harvest.generated_class(),'bStartsGrown':False,'HighPrioritySpawn':True,
                       'SpawnRate':0.,'SpawnTimeVariance':0.,'RipenTime':60.,'ShowRipeningProgress':True,
-                      'SeedProgressFormatText':unreal.Text('Sea Rice / 海稻：{0}%'),'SeedProgressPrimaryHintKey':'FarmableProgressPercent'}.items():
+                      'SeedProgressPrimaryHintKey':'FarmableProgressPercent'}.items():
         grower.set_editor_property(key,value)
+    set_text(grower,'SeedProgressFormatText','Growth')
     grower.set_editor_property('mobility',unreal.ComponentMobility.MOVABLE)
     grower.set_editor_property('relative_location',unreal.Vector(0,0,72))
     grower.set_editor_property('OffsetLocation',unreal.Vector(0,0,0))
@@ -167,17 +169,27 @@ def main():
     volume.set_editor_property('relative_scale3d',unreal.Vector(.20,.20,.32))
     unreal.BlueprintEditorLibrary.compile_blueprint(plant)
     unreal.get_default_object(plant.generated_class()).set_editor_property('replicates',True)
+    # Separate archetype: wild plants start ripe; planted crops retain growth.
+    save(plant)
+    wild_path=BASE+'/Blueprints/BP_BFF_WildRice'
+    wild=unreal.load_asset(wild_path)
+    if not wild:wild=assets.duplicate_asset(plant.get_path_name(),wild_path)
+    assert wild
+    wild_grower,_=component(wild,'RiceSeedGrower',cls('/Script/UWEFarming.UWESeedGrowerComponent'))
+    wild_grower.set_editor_property('bStartsGrown',True)
+    set_text(wild_grower,'SeedProgressFormatText','Growth')
+    unreal.BlueprintEditorLibrary.compile_blueprint(wild);save(wild)
     grain.set_editor_property('ActorClass',pickup.generated_class())
-    grain.set_editor_property('Name',unreal.Text('Sea Rice Grain / 海稻谷'))
-    grain.set_editor_property('ItemDescription',unreal.Text('Plant in an aquafarm with the builder. Keep some grains for replanting. / 使用建造器在种植槽栽种，留一部分稻谷再种。'))
+    set_text(grain,'Name','GrainName')
+    set_text(grain,'ItemDescription','GrainDescription')
     grain.set_editor_property('Thumbnail',icon)
     tag=unreal.GameplayTag();assert tag.import_text('(TagName="ItemType.Flora")')
     grain.set_editor_property('TypeTag',tag)
     planted.set_editor_property('ActorClass',plant.generated_class())
-    planted.set_editor_property('Name',unreal.Text('Sea Rice / 海稻'))
+    set_text(planted,'Name','PlantName')
     set_properties(planted,'PickupDestination=CannotPickup')
-    recipe.set_editor_property('Name',unreal.Text('Sea Rice / 海稻'))
-    recipe.set_editor_property('Description',unreal.Text('Grow sea rice in a planter. Harvest the ripe panicles at the crown. / 在种植槽栽种海稻，采收顶部成熟的稻穗。'))
+    set_text(recipe,'Name','PlantName')
+    set_text(recipe,'Description','PlantDescription')
     recipe.set_editor_property('Thumbnail',icon)
     set_properties(recipe,f'''Output(0)=(ItemType="{planted.get_path_name()}",NumItems=1)
 Requirements(0)=(ItemType="{grain.get_path_name()}",NumItems=1)
@@ -187,8 +199,8 @@ DefaultRecipeState=Unlocked''')
     assert category,'Native farming category must load'
     recipe.set_editor_property('Category',category)
     recipe.set_editor_property('DuplicatesBuilderActionData',True)
-    action.set_editor_property('Name',unreal.Text('Sea Rice / 海稻'))
-    action.set_editor_property('Description',unreal.Text('Plant sea rice in a planter. / 在种植槽里栽种海稻。'))
+    set_text(action,'Name','PlantName')
+    set_text(action,'Description','BuildDescription')
     action.set_editor_property('Recipe',recipe);action.set_editor_property('Thumbnail',icon)
     action.set_editor_property('GhostMeshOverride',meshes['SM_BFF_RicePlant'])
     set_properties(action,'''Category=BaseObject
@@ -201,16 +213,16 @@ LocalPlacementParams=(SurfaceRules=(AllowedSurfaces=36,AllowedZones=1,AllowedBru
     for index,slot in enumerate(meshes['SM_BFF_CookedRice'].get_editor_property('static_materials')):bowl_mesh.set_material(index,slot.get_editor_property('material_interface'))
     attach_data(bowl_mesh,[cooked])
     cooked.set_editor_property('ActorClass',bowl.generated_class())
-    cooked.set_editor_property('Name',unreal.Text('Steamed Rice / 大白饭'))
-    cooked.set_editor_property('ItemDescription',unreal.Text('Freshly steamed sea rice. / 用海稻谷与净水蒸熟的一碗大白饭。'))
+    set_text(cooked,'Name','FoodName')
+    set_text(cooked,'ItemDescription','FoodDescription')
     cooked.set_editor_property('Thumbnail',cooked_icon)
     set_properties(cooked,'''TypeTag=(TagName="ItemType.Fuel")
 Abilities(0)="/Game/Blueprints/AbilitySystem/Abilities/GA_Consume.GA_Consume_C"
 Abilities(1)="/Game/Blueprints/AbilitySystem/Abilities/Tools/GA_DropHeldItem.GA_DropHeldItem_C"
-TunableData=(((TagName="ItemType.TunableData.Food"),25.000000),((TagName="ItemType.TunableData.Water"),5.000000))
+TunableData=(((TagName="ItemType.TunableData.Food"),25.000000))
 bUseFromInventory=True''')
-    cooked_recipe.set_editor_property('Name',unreal.Text('Steamed Rice / 大白饭'))
-    cooked_recipe.set_editor_property('Description',unreal.Text('Steam 1 sea rice grain with 1 water. / 使用 1 份海稻谷和 1 份净水蒸制。'))
+    set_text(cooked_recipe,'Name','FoodName')
+    set_text(cooked_recipe,'Description','MealDescription')
     cooked_recipe.set_editor_property('Thumbnail',cooked_icon)
     cooked_recipe.set_editor_property('CraftingTime',5.)
     set_properties(cooked_recipe,f'''Output(0)=(ItemType="{cooked.get_path_name()}",NumItems=1)
@@ -223,7 +235,7 @@ OrderingIndex=510''')
     report={'status':'editor_assets_created_game_test_pending','created':created,
             'native_growth_seconds':60,'grain_item':grain.get_path_name(),'plant_class':plant.generated_class().get_path_name(),
             'native_seed_grower':grower.get_class().get_path_name(),'save_component':'UWESaveComponent',
-            'native_farming_category':category.get_path_name(),'version':'0.2.0-prototype',
+            'native_farming_category':category.get_path_name(),'version':'0.4.0-prototype',
             'harvesting':'accepted in game by user','panicle_anchor_cm':72,
             'cooked_rice':cooked.get_path_name(),'cooking_recipe':cooked_recipe.get_path_name()}
     (OUT/'import_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')

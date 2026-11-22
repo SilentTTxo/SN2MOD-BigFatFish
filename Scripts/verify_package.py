@@ -19,7 +19,7 @@ prefix = "../../../Subnautica2/Content/Mods/BigFatFish/"
 expected = {"ModActor.uasset", "BP_BigFatFish.uasset",
             "Character/SK_BigFatFish.uasset", "Character/SK_BigFatFish_Skeleton.uasset",
             "Character/AN_BigFatFish_Swim.uasset", "Character/ABP_BigFatFish_Gaze.uasset"}
-if settings.get('feeding_enabled'):expected.add('Character/AN_BigFatFish_GrabEat.uasset')
+if settings.get('feeding_enabled'):expected.update({'Character/AN_BigFatFish_GrabEat.uasset','Character/AN_BigFatFish_HoldBasin.uasset','Props/BP_BFF_BasinProp.uasset','Props/SM_BFF_OriginalBasin.uasset'})
 expected.update(f"Textures/T_BigFatFish_{i:02}.uasset" for i in range(6))
 expected.update(f"Textures/T_BigFatFish_{i:02}.ubulk" for i in range(6))
 expected.update(f"Materials/M_BigFatFish_{name}.uasset" for name in ["body", "clothing", "expression", "hair", "head", "TiePen"])

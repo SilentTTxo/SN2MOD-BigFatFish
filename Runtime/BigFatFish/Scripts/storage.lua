@@ -21,6 +21,7 @@ function M.validate(data, context)
     for _, f in ipairs(data.fish) do
         assert(type(f) == "table" and finite(f.id) and f.id >= 1 and f.id % 1 == 0 and not seen[f.id], "Invalid fish ID")
         seen[f.id] = true
+        assert(f.basinMode==nil or type(f.basinMode)=="boolean", "Invalid basin mode")
         assert(f.size == nil or (finite(f.size) and f.size >= 0.5 and f.size <= 1.5), "Invalid fish size")
         assert(vector(f.position) and vector(f.center), "Invalid position")
         assert(finite(f.yaw) and finite(f.phase) and finite(f.startAngle), "Invalid movement state")

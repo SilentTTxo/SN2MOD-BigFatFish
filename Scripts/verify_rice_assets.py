@@ -58,9 +58,9 @@ for name in ('BP_BFF_RiceGrain','BP_BFF_RiceHarvest'):
     export(cdo,name)
 cooked=unreal.load_asset(BASE+'/Data/DA_BFF_CookedRice_ItemType');assert cooked
 cooked_text=export(cooked,'cooked_item')
-assert 'GA_BFF_OfferRice_C' in cooked_text and 'bUseFromInventory=True' in cooked_text
-assert 'ItemType.TunableData.Food' not in cooked_text
-assert 'GA_Consume_C' not in cooked_text
+assert 'GA_Consume_C' in cooked_text and 'bUseFromInventory=True' in cooked_text
+assert 'ItemType.TunableData.Food' in cooked_text
+assert 'GA_BFF_OfferRice_C' not in cooked_text
 meal=unreal.load_asset(BASE+'/Data/DA_BFF_CookedRice_Recipe');assert meal
 meal_text=export(meal,'cooked_recipe')
 for value in ('DA_SustenanceMeals','DA_BFF_RiceGrain_ItemType','DA_Water_ItemType','DA_BFF_CookedRice_ItemType'):
@@ -73,6 +73,9 @@ assert bowl_cdo.get_editor_property('Mesh').get_editor_property('static_mesh').g
 for name in ('RiceStem','RiceLeaf','RiceGrain','RiceGrainLight','RiceBowl','CookedRice','CookedRiceShade'):
     material=unreal.load_asset(BASE+'/Materials/M_'+name);assert material
     assert material.get_editor_property('used_with_nanite'),name
+    glow=unreal.MaterialEditingLibrary.get_material_property_input_node(material,unreal.MaterialProperty.MP_EMISSIVE_COLOR)
+    assert isinstance(glow,unreal.MaterialExpressionConstant) and glow.get_editor_property('r')==0,name
+    assert material.get_editor_property('shading_model')==unreal.MaterialShadingModel.MSM_DEFAULT_LIT
     material_text=export(material,'material_'+name)
     assert 'T_BFF_'+name+'_Color' in material_text,name
 for name in ('SM_BFF_RicePlant','SM_BFF_RiceStalk','SM_BFF_RicePanicle','SM_BFF_RiceGrain','SM_BFF_CookedRice','SM_BFF_EmptyRiceBowl'):
@@ -85,11 +88,22 @@ for name in ('BP_BFF_RiceGrain','BP_BFF_RiceHarvest','BP_BFF_CookedRice'):
     comp=cdo.get_editor_property('Mesh');mesh=comp.get_editor_property('static_mesh')
     for index,slot in enumerate(mesh.get_editor_property('static_materials')):
         assert comp.get_material(index)==mesh.get_material(index),(name,index)
-assert unreal.load_asset(BASE+'/Blueprints/GA_BFF_OfferRice')
+assert 'NSLOCTEXT("BigFatFishRice"' in grain_text
 assert unreal.load_asset(BASE+'/Blueprints/BP_BFF_RiceServing')
+cultures={}
+for culture,expected in [('en','Sea Rice Grain'),('zh-Hans','海稻'),('zh-Hant','海稻'),('fr','Sea Rice Grain'),('ja','Sea Rice Grain')]:
+    assert unreal.InternationalizationLibrary.set_current_culture(culture)
+    value=str(grain.get_editor_property('Name'));cultures[culture]=value
+    assert value==expected,(culture,value,expected)
+report['native_cultures']=cultures
+wild=unreal.load_asset(BASE+'/Blueprints/BP_BFF_WildRice');assert wild
+wild_components=[lib.get_object_for_blueprint(lib.get_data(h),wild) for h in sub.k2_gather_subobject_data_for_blueprint(wild)]
+assert any(c and c.get_name()=='RiceSeedGrower_GEN_VARIABLE' and c.get_editor_property('bStartsGrown') for c in wild_components)
+serving=unreal.get_default_object(unreal.load_asset(BASE+'/Blueprints/BP_BFF_RiceServing').generated_class())
+assert serving.get_editor_property('EmptyMesh').get_name()=='SM_BFF_EmptyRiceBowl'
 report.update(status='PASS: persisted native rice item, builder recipe, planter rules, growth, save/replication components and pickups',
               components={name:obj.get_class().get_path_name() for name,obj in components.items()},
-              ripening_seconds=60,panicle_anchor_cm=72,version='0.3.1-prototype',
-              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.3.1 visuals, cooking and save/reload await game test')
+              ripening_seconds=60,panicle_anchor_cm=72,version='0.4.0-prototype',
+              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.4.0 visuals, cooking and save/reload await game test')
 (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
 print('RICE_VALIDATION_PASS',json.dumps(report),flush=True)

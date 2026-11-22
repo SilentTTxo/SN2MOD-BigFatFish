@@ -25,6 +25,7 @@ with (project/"Config/DefaultGameplayTags.ini").open('a',encoding='utf8') as tag
     for tag in ('BuildableSurface.Planter','SculpturalBase.BrushType.Planter'):
         tags.write('+GameplayTagList=(Tag="'+tag+'",DevComment="Existing game planter tag needed for rice authoring")\n')
 with (project/"Config/DefaultEngine.ini").open("a",encoding="utf-8") as config:
+    config.write('\n[Internationalization]\n+LocalizationPaths='+str(project/'Plugins/BigFatFishRice/Content/Localization/BigFatFishRice').replace('\\','/')+'\n')
     config.write("\n[Core.Log]\nLogProperty=Error\nLogStreaming=Warning\n\n[/Script/UnrealEd.CookerSettings]\ncook.AllowCookedDataInEditorBuilds=True\ns.AllowUnversionedContentInEditor=1\n")
     full=(ROOT/"Modkit/Config/DefaultEngine.ini").read_text(encoding='utf-8-sig')
     section=full.split('[/Script/Engine.CollisionProfile]',1)[1].split('\n[',1)[0]
@@ -43,6 +44,10 @@ bCookAll=False
 bShareMaterialShaderCode=False
 bSharedMaterialNativeLibraries=False
 bCompressed=True
++CulturesToStage=en
++CulturesToStage=zh
++CulturesToStage=zh-Hans
++CulturesToStage=zh-Hant
 IncludePrerequisites=False
 
 [Staging]
@@ -58,9 +63,9 @@ shutil.copy2(ROOT/'Modkit/Releases/SN2Base/Windows/AssetRegistry.bin',release/'A
 (ROOT/"RiceContent").mkdir(exist_ok=True)
 source_plugin=ROOT/"RiceContent/BigFatFishRice"
 source_plugin.mkdir(exist_ok=True)
-descriptor={"FileVersion":3,"Version":4,"VersionName":"0.3.1-prototype","FriendlyName":"Big Fat Fish - Rice",
+descriptor={"FileVersion":3,"Version":5,"VersionName":"0.4.0-prototype","FriendlyName":"Big Fat Fish - Rice",
     "Description":"Native rice planting prototype","Category":"Mods","CreatedBy":"SilentTTxo",
-    "CanContainContent":True,"EnabledByDefault":True,"Installed":True,"IsBetaVersion":True,"SemVersion":"0.3.1","RequiredOnRemote":False}
+    "CanContainContent":True,"EnabledByDefault":True,"Installed":True,"IsBetaVersion":True,"SemVersion":"0.4.0","RequiredOnRemote":False,"LocalizationTargets":[{"Name":"BigFatFishRice","LoadingPolicy":"Game"}]}
 (source_plugin/"BigFatFishRice.uplugin").write_text(json.dumps(descriptor,indent=2),encoding='utf8')
 shutil.copytree(source_plugin,project/"Plugins/BigFatFishRice",dirs_exist_ok=True)
 print(project/"Subnautica2.uproject", "farming schema objects:", count)

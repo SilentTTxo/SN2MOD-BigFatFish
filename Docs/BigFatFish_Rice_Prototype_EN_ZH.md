@@ -1,14 +1,6 @@
-# Big Fat Fish — Sea Rice / 海稻
+# Sea Rice / 海稻 — 0.4.0-prototype
 
-Version / 版本：0.3.1-prototype · Windows Steam，UE 5.6.1，CL-131439。
-
-增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.5.1 更新修复眨眼、嘴型启用时脸部材质回退的问题。
-
-Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.5.1 update fixes face materials falling back when blink or mouth morphs activate.
-
-种植、采收、大白饭制作已由玩家验收。本版修正网格仍绑定灰色默认材质的问题、原生生长提示键及顶部稻穗定位，并接入大白饭抢饭召唤；这些修改的游戏内效果仍待验收。
-
-Planting, harvesting and Steamed Rice crafting have been accepted by the player. This version repairs default-gray material bindings, the growth hint key and the crown anchor, and adds rice-based fish summoning. The changes still require in-game validation.
+Included in Big Fat Fish 0.6.0-dev / 包含于大肥鱼 0.6.0-dev 完整包。
 
 ## 依赖 / Requirement
 
@@ -17,72 +9,28 @@ Planting, harvesting and Steamed Rice crafting have been accepted by the player.
 ## 安装 / Installation
 
 1. 完全退出游戏。 / Fully exit the game.
-2. 将 ZIP 中的 `Subnautica2` 文件夹合并到游戏根目录（Steam → 管理 → 浏览本地文件），更新时覆盖本模组同名文件。 / Merge the archive's `Subnautica2` folder into the game root opened via Steam → Manage → Browse local files; replace this mod's matching files when updating.
-3. 启动游戏，载入已解锁原版种植设施的存档。 / Start the game and load a save with native farming unlocked.
+2. 将 ZIP 中的 `Subnautica2` 文件夹合并到 Steam“管理 → 浏览本地文件”打开的游戏根目录，更新时覆盖本模组同名文件。 / Merge the ZIP's `Subnautica2` folder into the game root opened through Steam → Manage → Browse local files; replace this mod's matching files when updating.
+3. 启动游戏并载入存档。 / Start the game and load a save.
 
-## 使用 / Use
+模组自动创建数据目录，不需要手动创建存档文件夹。 / The mod creates its save-data directory automatically.
 
-控制台测试命令 / Console test commands:
+## 海稻与大白饭 / Sea Rice and Steamed Rice
 
-```text
-bigfatfish_rice_give 3
-bigfatfish_rice_status
-```
+救生舱附近约 25–50 米的合适海底，会随机分布最多八株野生海稻。采收后保留一些海稻，在建造器的种植/植物分类消耗一份，栽种到原版种植槽。测试生长周期为 60 秒。装配台餐食分类：一份海稻 + 一瓶净水，五秒制作一碗大白饭。
 
-1. 背包获得 `Sea Rice Grain / 海稻谷`。 / Receive Sea Rice Grain in your inventory.
-2. 在建造器的原版种植/植物分类选择 `Sea Rice / 海稻`，消耗 1 份海稻谷栽种在原版种植槽上。 / Choose Sea Rice in the builder's farming/plants category and spend one grain to plant it on a native planter.
-3. 等待约 60 秒采收成熟稻穗；60 秒为测试周期。 / Harvest ripe panicles after roughly 60 seconds; this duration is provisional for testing.
-4. 在装配台的餐食分类寻找 `Steamed Rice / 大白饭`。1 份海稻谷 + 1 瓶水 → 1 碗大白饭，制作时间 5 秒。新版大白饭用于喂鱼，不再给玩家增加饱食度或水分。 / Find Steamed Rice in the fabricator's Meals category. One Sea Rice Grain + one bottle of Water yields one bowl in five seconds. It is now an offering for the fish, without restoring player food or water.
-5. 使用游戏自身的保存，分别检查生长中、成熟、采收后和制作米饭后的保存/重载。 / Use the game's save function and check save/reload while growing, when ripe, after harvesting, and after crafting rice.
+Up to eight wild Sea Rice plants are distributed on suitable seabed roughly 25–50 m from the lifepod. Harvest and keep some grains for planting through the builder's farming/plants category on a native planter. The provisional growth cycle is 60 seconds. Fabricator → Meals: one Sea Rice Grain + one Water makes one Steamed Rice in five seconds.
 
-更新保留原有资源 ID。顶部定位修正也会处理当前世界中已存在且仍归属植株的稻穗，不移动已采收/掉落的物品。
+**吃大白饭只恢复 25 饱食度，不召唤。** 将大白饭丢到世界里，连续超过三秒后吸引一只新大肥鱼。鱼从身后接近掉落的饭碗，伸手抓取、吃完后加入原有僚机跟随。每碗只触发一次；提前捡回或抢饭前捡回会取消，不额外扣除背包物品。演出中可关闭 PDA 观看。
 
-Asset IDs are retained. Crown anchoring also corrects existing panicles still owned by a grower; harvested or dropped items are not repositioned.
+**Eating rice restores 25 food and does not summon.** Drop a bowl into the world and leave it there for more than three seconds. A new fish approaches from behind, grabs the dropped bowl, eats, then joins the existing companion formation. One bowl triggers once. Picking it up before the grab cancels the offering without an extra inventory charge. Close the PDA to watch the sequence.
 
-## 大白饭召唤 / Summoning with rice
+新增文本使用原生 FText 本地化：中文游戏只显示中文，其他语言显示英文。 / Native FText localization displays Chinese for Chinese game languages and English for all others.
 
-使用 Big Fat Fish 0.5.1 完整包。大白饭制作配方不变；在背包使用一碗大白饭，会显示饭碗，一只新鲸鱼娘从玩家身后绕到前方，伸手抢走、吃饭，随后加入跟随。
-
-Use the complete Big Fat Fish 0.5.1 package. The crafting recipe is unchanged. Using Steamed Rice shows a bowl; a new companion swims from behind the player, reaches for the bowl, eats, and joins formation following.
-
-使用大白饭由游戏原生背包消耗 1 份，模组不再额外移除物品。使用后关闭 PDA，鱼先从身后游到前方，确认已渲染后才播放伸手、抓取和进食；整段约 10 秒。饭碗保持满碗直到实际进食段结束，再展示空碗并收起。重复请求或启动失败时，只退回能够通过原生使用前后数量差确认已消耗的一份。单机/本地主角逻辑已做离线检查，联网行为未验收。动画对位、游戏内使用入口及演出需实机验收。
-
-Native backpack use spends one serving; the mod performs no extra item removal. Close the PDA after use. The fish approaches from behind before the reach/grab/eat montage starts, and the whole visible sequence lasts roughly ten seconds. The bowl stays full until the actual eating segment ends, then an empty bowl is shown and put away. A rejected/failed use is refunded only when a before/after native-use receipt proves one serving was spent. Local-player transaction logic has offline coverage; multiplayer, the in-game use entry point and visual alignment remain unverified.
-
-吃完后使用游戏保存，保存新同伴。临时饭碗和演出进度不写入大肥鱼 JSON；由原生使用支付后创建的新鱼会作为普通跟随同伴保存。
-
-Save the game after feeding to keep the companion. Temporary bowls and sequence progress are not written to companion JSON. A fish created by the native-paid use is saved as a normal following companion.
 
 ## 保存 / Saving
 
-海稻和大白饭接入原生物品、建造和保存组件，不创建额外 JSON 数据目录。保存恢复效果仍需游戏内验收。
+作物、野生作物和食品走游戏原生保存，无额外 JSON。野生作物使用原生动态物体登记与固定 GUID，避免每次读档重复生成。作物材料自发光为零。新功能的实机表现与保存恢复需复测。
 
-Sea Rice and Steamed Rice use native items, construction, and save components. They create no extra JSON data directory. Persistence still requires in-game validation.
+Crops, wild crops and food use native saves without new JSON files. Wild plants use native dynamic-item registration and stable GUIDs to avoid duplication across reloads. Crop materials have zero emissive output. The new features and native persistence still require in-game retesting.
 
-## 排错与卸载 / Troubleshooting and removal
-
-- 新版菜谱未出现：完全重启游戏，确认 `BigFatFishRice` 内容包目录正确，并保留日志。 / If the new recipe is missing, fully restart the game, verify the BigFatFishRice content location, and keep the logs.
-- 日志 / Log：`<game_root>/Subnautica2/Binaries/Win64/ue4ss/UE4SS.log`，搜索 / search `BigFatFishRice`；游戏日志 / game log：`%LOCALAPPDATA%/Subnautica2/Saved/Logs/Subnautica2.log`。
-- 卸载前在游戏中拆除海稻、清空海稻谷和大白饭并保存，再退出，移除本包的两个目录。 / Before uninstalling, remove the crop, grains and cooked rice in-game and save; then exit and remove the two directories below.
-
-```text
-<game_root>/Subnautica2/Mods/BigFatFishRice/
-<game_root>/Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFishRice/
-```
-
-## 开发 / Development
-
-海稻、谷粒、碗饭、贴图和图标为本项目使用 Blender 程序制作的原创原型，使用原版种植/餐食分类及原生放置规则。
-
-The crop, grains, rice bowl, textures and icons are original procedural Blender assets authored for this project. Native farming/meal categories and planter rules are reused.
-
-```text
-python Scripts/rice_workflow.py prepare
-python Scripts/rice_workflow.py import
-python Scripts/rice_workflow.py verify
-python Scripts/rice_workflow.py cook
-python Scripts/rice_workflow.py package
-python Scripts/rice_workflow.py install
-```
-
-开发沿用本项目匹配的定制引擎和 Modkit；prepare 在 Build/Tests 创建隔离工程。 / Development reuses the matched custom editor and local Modkit; prepare creates an isolated project in Build/Tests.
+完整命令、手势、保存说明和借物表见 BigFatFish_User_Guide_EN_ZH.md。 / See BigFatFish_User_Guide_EN_ZH.md for commands, gestures, saving and credits.

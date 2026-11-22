@@ -1,4 +1,5 @@
 function RegisterCustomEvent() end
+function FindAllOf() return {} end
 -- Exercises the real runtime, save adapter and storage with mocked UE/disk APIs.
 local root = assert(arg[1], "Pass project directory")
 local dir = root .. "/Runtime/BigFatFish/Scripts/"
@@ -39,7 +40,7 @@ os.rename = function(from, to)
 end
 local valid = function() return true end
 local world = {IsValid = valid, GetAddress = function() return worldAddress end}
-local pawn = {IsValid = valid, IsA = function() return true end,
+local pawn = {HasAuthority=function() return true end,GetGameTimeSinceCreation=function()return clock end,IsValid = valid, IsA = function() return true end,
     GetWorld = function() return world end, K2_GetActorLocation = function() return origin end}
 local controller = {IsValid = valid, GetControlRotation = function() return {Yaw = 30} end}
 local cls = {IsValid = valid}

@@ -54,3 +54,12 @@ v0.2.1 修复：原 v0.2.0 的游戏实测已确认 JSON 正常写入，但读�
 - 本机 Modkit/Content/DynamicClasses/Subnautica2-131439.jmap.gz；提取的接口摘要 Logs/save_api.txt。
 
 JSON 编解码器：https://github.com/rxi/json.lua （MIT）；Mariana 仅作研究参考，未复制其实现或作为依赖。
+
+
+## 0.6.0 wild crop integration / 野生海稻
+
+Wild plants use `UWEDynamicItemsManager:SpawnActorAndRegisterWithoutDropping` with a stable GUID derived from the native SaveId and one of eight population indices. The native `DynamicItemsSave.DynamicItems` and `ActiveActorsByID` maps are checked before spawning; an existing or streamed-out native record suppresses respawning. The plant Blueprint carries the same native save and grower components as the planted crop, with only `bStartsGrown=True` on the wild archetype. Native removal-out-of-range is disabled for these registered plants. Ground tracing is restricted to WorldStatic terrain and suitable slopes. No additional JSON file is created. Native runtime persistence still needs an in-game save/reload test.
+
+野生海稻通过原生动态物体管理器登记，固定 GUID 来自原生 SaveId 和八个种群索引。生成前检查原生保存记录与活跃物体映射，已保存或流送卸载的植株不会重复补种。沿用种植版的原生保存、生长组件，野生资源默认成熟；不写新的 JSON。实机生长状态与原生保存恢复仍待验收。
+
+Fish snapshots additionally save an optional boolean `basinMode`; legacy records default to no basin. Emotions, props, UObjects and unfinished feeding sequences are not serialized. A dropped serving is consumed only at the actual grab; inventory APIs are never called by the offering module. The existing one JSON + one backup policy is unchanged.

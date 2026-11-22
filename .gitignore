@@ -79,3 +79,6 @@ node_modules/
 project.local.json
 .DS_Store
 Thumbs.db
+
+!/SourceAssets/Export/BigFatFish_HoldBasin.fbx
+!/SourceAssets/Export/SM_BFF_OriginalBasin.fbx

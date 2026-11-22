@@ -40,6 +40,13 @@ function Face.update(fish, dt)
         else f.mouthStart = nil end
     end
     if fish.feedMouth then mouth=fish.feedMouth end
+    if fish.emotion then fish.emotion.time=fish.emotion.time+dt end
+    for _,kind in ipairs({'happy','sad','angry'}) do
+        local target=fish.emotion and fish.emotion.kind==kind and fish.emotion.time<7 and .8 or 0
+        f[kind]=(f[kind] or 0)+(target-(f[kind] or 0))*(1-math.exp(-5*dt))
+        if names[kind] then mesh:SetMorphTarget(names[kind],f[kind],true) end
+    end
+    if fish.emotion and fish.emotion.time>9 then fish.emotion=nil end
     mesh:SetMorphTarget(names.blink, blink, true)
     mesh:SetMorphTarget(names.mouthOpen, mouth, true)
     mesh:SetMorphTarget(names.mouthRound, mouth * 0.25, true)

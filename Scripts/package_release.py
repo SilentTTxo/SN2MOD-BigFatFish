@@ -33,7 +33,7 @@ for extension in ("pak", "utoc", "ucas"):
 
 runtime = ROOT / "Runtime/BigFatFish"
 runtime_files = ["enabled.txt"] + [f"Scripts/{name}" for name in (
-    "main.lua", "config.lua", "gaze.lua", "face.lua", "face_morphs.lua", "feeding.lua",
+    "main.lua", "config.lua", "gaze.lua", "face.lua", "face_morphs.lua", "feeding.lua", "interactions.lua",
     "storage.lua", "save_adapter.lua", "json.lua", "json.LICENSE",
 )]
 assert {p.relative_to(runtime).as_posix() for p in runtime.rglob("*") if p.is_file()} == set(runtime_files)

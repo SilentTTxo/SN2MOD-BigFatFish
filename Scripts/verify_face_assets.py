@@ -10,7 +10,7 @@ for slot in mesh.get_editor_property('materials'):
     assert material and material.get_editor_property('used_with_skeletal_mesh'), str(material)
     assert material.get_editor_property('used_with_morph_targets'), str(material)
 bindings={}
-for key,suffix in {'blink':'BFF_Blink','mouthOpen':'BFF_MouthOpen','mouthRound':'BFF_MouthRound'}.items():
+for key,suffix in {'blink':'BFF_Blink','mouthOpen':'BFF_MouthOpen','mouthRound':'BFF_MouthRound','happy':'BFF_Happy','sad':'BFF_Sad','angry':'BFF_Angry'}.items():
     found=[n for n in names if n.endswith(suffix)]
     assert len(found)==1,(suffix,names)
     bindings[key]=found[0]

@@ -64,6 +64,14 @@ if settings.get('feeding_enabled'):
         assert (a.translation-b.translation).length()>10,(bone,'Reach gesture is missing')
     feeding_slots=gaze.get_nodes_of_class(unreal.AnimGraphNode_Slot)
     assert len(feeding_slots)==1 and str(feeding_slots[0].get_editor_property('node').get_editor_property('slot_name'))=='DefaultSlot'
+defaults=unreal.get_default_object(cls)
+assert defaults.get_editor_property('FeedAnimation')==feeding
+hold=defaults.get_editor_property('BasinAnimation');assert isinstance(hold,unreal.AnimSequence)
+assert abs(hold.get_editor_property('sequence_length')-2)<.05
+assert defaults.get_editor_property('BasinPropClass')
+unreal.SystemLibrary.collect_garbage()
+assert defaults.get_editor_property('FeedAnimation') and defaults.get_editor_property('BasinAnimation')
+assert defaults.get_editor_property('BasinPropClass')
 bounds = mesh.get_bounds()
 report = {
     "status": "persisted_assets_verified_not_game_tested",

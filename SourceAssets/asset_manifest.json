@@ -104,24 +104,37 @@
   "face_shapes": [
     "BFF_Blink",
     "BFF_MouthOpen",
-    "BFF_MouthRound"
+    "BFF_MouthRound",
+    "BFF_Happy",
+    "BFF_Angry",
+    "BFF_Sad"
   ],
   "files": {
+    "BigFatFish_GrabEat.fbx": {
+      "bytes": 2103868,
+      "sha256": "0f2d8815a7810f05dcaae4ffd179245b35c683dade3677b97392c5e67e0358a8"
+    },
+    "BigFatFish_HoldBasin.fbx": {
+      "bytes": 1467484,
+      "sha256": "2838f782e386cf1b5bc816453e5a65513557f3b64ad0924613ce2157d83b6d8b"
+    },
+    "SM_BFF_OriginalBasin.fbx": {
+      "bytes": 50460,
+      "sha256": "11e172b06c7fe0d470e9188f418509dfafb20f176f6a00dbbe987635fb6ba991"
+    },
     "WhaleGirl_Swim.fbx": {
-      "bytes": 4467196,
-      "sha256": "3d888a91d7b85a6b542d02d53964d0473cdb6da7c12731db5df020d3486865df"
+      "bytes": 4693756,
+      "sha256": "aa3175fd8cb8a4d73d3dd9105e34e2597b1aed3dfd857acfa158e157f0bbaec8"
     },
     "WhaleGirl_Swim.glb": {
-      "bytes": 15678028,
-      "sha256": "5b1a50164eaeba423115b9e3aeee555526f10ab0c0ce228bb0934c893a2d6655"
+      "bytes": 15979740,
+      "sha256": "b7f96c2a1ad164c0cdf3c22faa714a40a0ac6082330f97cd8457a646e36bbb78"
     }
   },
-  "feeding_animation": {
-    "file": "BigFatFish_GrabEat.fbx",
-    "duration_seconds": 4.8,
-    "provenance": "New reach/grab/eat arm IK gesture baked over existing Quaternius swim retarget",
-    "sha256": "0f2d8815a7810f05dcaae4ffd179245b35c683dade3677b97392c5e67e0358a8",
-    "game_validation": "pending",
-    "units": "METRIC, scale_length=1, same front-X import as swim"
+  "interaction_animations": {
+    "grab_eat_seconds": 4.8,
+    "hold_basin_loop_seconds": 2,
+    "authoring": "Project-authored arm IK over the existing Quaternius swim retarget",
+    "basin": "Original creator TiePen morph, extracted into an independent handheld prop"
   }
 }

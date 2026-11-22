@@ -59,7 +59,7 @@ def main():
     containers=list(plugin.rglob('*.pak'))+list(plugin.rglob('*.utoc'))+list(plugin.rglob('*.ucas'))
     assert any(p.suffix=='.utoc' for p in containers),'Missing IoStore container'
     if action=='package':
-        release=ROOT/'Build/Releases/BigFatFishRice-0.3.1-prototype.zip';release.parent.mkdir(exist_ok=True)
+        release=ROOT/'Build/Releases/BigFatFishRice-0.4.0-prototype.zip';release.parent.mkdir(exist_ok=True)
         entries={}
         for path in plugin.rglob('*'):
             if path.is_file():entries['Subnautica2/Mods/BigFatFishRice/'+path.relative_to(plugin).as_posix()]=path
@@ -70,7 +70,7 @@ def main():
         with ZipFile(release,'w',ZIP_DEFLATED,compresslevel=9) as package:
             for name,path in sorted(entries.items()):package.write(path,name)
         with ZipFile(release) as package:assert package.testzip() is None
-        manifest={'status':'packaged_gameplay_test_pending','version':'0.3.1-prototype','zip_sha256':digest(release),
+        manifest={'status':'packaged_gameplay_test_pending','version':'0.4.0-prototype','zip_sha256':digest(release),
                   'files':[{ 'path':name,'sha256':digest(path)} for name,path in sorted(entries.items())]}
         release.with_suffix('.manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
         print('ZIP:',release,'bytes:',release.stat().st_size);return

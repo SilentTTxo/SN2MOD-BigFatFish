@@ -28,7 +28,7 @@ for mat in bpy.data.materials:
  mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
  mat.node_tree.links.new(shader.outputs['BSDF'],output.inputs['Surface'])
 # Keep only the authored face shapes used by the runtime; never alter the source blend.
-face_map={"blink":"BFF_Blink","aa":"BFF_MouthOpen","ou":"BFF_MouthRound"}
+face_map={"blink":"BFF_Blink","aa":"BFF_MouthOpen","ou":"BFF_MouthRound","happy":"BFF_Happy","sad":"BFF_Sad","angry":"BFF_Angry"}
 face_shapes=[]
 for obj in meshes:
  if not obj.data.shape_keys: continue
@@ -44,6 +44,7 @@ bpy.ops.export_scene.fbx(filepath=str(out/'WhaleGirl_Swim.fbx'),use_selection=Tr
 # GLB is an additional interchange/reference export; do not run the reference mannequin's actions.
 bpy.ops.export_scene.gltf(filepath=str(out/'WhaleGirl_Swim.glb'),use_selection=True,export_format='GLB',export_animations=True,export_animation_mode='ACTIVE_ACTIONS',export_frame_range=True,export_force_sampling=True,export_cameras=False,export_lights=False)
 manifest={'source_blend':'WhaleGirl_Swim_Preview.blend','animation':'WhaleGirl_Quaternius_Swim_Fwd','fps':30,'frame_start':1,'frame_end':61,'duration_seconds':2,'in_place':True,'skeleton_bones':len(rig.data.bones),'mesh_objects':len(meshes),'triangles':sum(len(o.data.loop_triangles) for o in meshes),'model_author':'木子恶魔 / MZEM','animation_author':'Quaternius','animation_source':'Swim_Fwd_Loop / Universal Animation Library 1','animation_source_url':'https://quaternius.itch.io/universal-animation-library','preview_speed_relative_to_source':2/3,'textures':textures,'notes':['Tail heading corrected and a small secondary sway added.','VRM MToon and spring bones need UE-specific setup.','Model creator attribution required; follow the original creator terms. Publication with attribution clarified by the user on 2026-11-02.']}
+manifest['interaction_animations']={'grab_eat_seconds':4.8,'hold_basin_loop_seconds':2,'basin':'Original creator TiePen morph extracted into an independent handheld prop'}
 manifest['materials']=material_manifest
 manifest['face_shapes']=face_shapes
 manifest['files']={p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.iterdir() if p.is_file()}

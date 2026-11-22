@@ -1,6 +1,6 @@
 local root=assert(arg[1])
 local Face=dofile(root.."/Runtime/BigFatFish/Scripts/face.lua")
-Face.configure({blink="blink",mouthOpen="open",mouthRound="round"},function(s) return s end)
+Face.configure({blink="blink",mouthOpen="open",mouthRound="round",happy="happy",sad="sad",angry="angry"},function(s) return s end)
 local function fish()
     local weights={}
     local mesh={IsValid=function() return true end,SetMorphTarget=function(_,name,value) weights[name]=value end}
@@ -26,5 +26,12 @@ assert(mouth and independent,"Mouth activity and independent blink schedules")
 a.face.nextBlink=math.huge;a.face.nextMouth=math.huge
 for _=1,120 do Face.update(a,1/60) end
 assert(wa.blink==0 and wa.open==0 and wa.round==0)
+for _,kind in ipairs({'happy','sad','angry'}) do
+ a.emotion={kind=kind,time=0}
+ for _=1,60 do Face.update(a,1/60) end
+ assert(wa[kind]>.7 and wa[kind]<=.8,'Native emotion target reaches bounded weight')
+ for _=1,60*12 do Face.update(a,1/60) end
+ assert(wa[kind]<.001 and a.emotion==nil,'Expression fades to neutral')
+end
 assert(not Face.update({actor={}},0.016))
 print("PASS: random independent blinks; complete closure/reopening; gentle intermittent mouth; bounded weights; neutral recovery")

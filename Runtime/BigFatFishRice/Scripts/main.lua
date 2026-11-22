@@ -1,5 +1,7 @@
 -- Native rice planting prototype. No sidecar saves: inventory/plants use game saves.
 local UEHelpers = require("UEHelpers")
+local dir=debug.getinfo(1,'S').source:sub(2):match('^(.*[/\\])')
+local Wild=dofile(dir..'wild_rice.lua')
 local ITEM_PACKAGE = "/BigFatFishRice/Data/DA_BFF_RiceGrain_ItemType"
 local ITEM_NAME = "DA_BFF_RiceGrain_ItemType"
 local function log(message) print("[BigFatFishRice] " .. tostring(message) .. "\n") end
@@ -49,7 +51,9 @@ local function discoverGrowers()
     if not valid(pc) or not valid(pc.Pawn) then growers={};return end
     local world=pc.Pawn:GetWorld();if not valid(world) then growers={};return end
     growers={}
-    for _,plant in ipairs(FindAllOf('BP_BFF_RicePlant_C') or {}) do
+    local all=FindAllOf('BP_BFF_RicePlant_C') or {}
+    for _,p in ipairs(FindAllOf('BP_BFF_WildRice_C') or {}) do all[#all+1]=p end
+    for _,plant in ipairs(all) do
         if valid(plant) and plant:GetWorld():GetAddress()==world:GetAddress() then
             growers[#growers+1]=plant
             repairLegacyOverrides(plant.RiceStalk)
@@ -76,6 +80,7 @@ local function anchorGrowingPanicles()
         end
     end
 end
+Wild.configure({player=UEHelpers.GetPlayerController,name=UEHelpers.FindOrAddFName,log=log})
 local lastGrowthError
 local function growthGuard(callback)
     return function()
@@ -83,7 +88,7 @@ local function growthGuard(callback)
         if not ok and tostring(err)~=lastGrowthError then lastGrowthError=tostring(err);log('Growth: '..lastGrowthError) end
     end
 end
-LoopInGameThreadWithDelay(500,growthGuard(discoverGrowers))
+LoopInGameThreadWithDelay(500,growthGuard(function() discoverGrowers();Wild.poll() end))
 LoopInGameThreadAfterFrames(1,growthGuard(anchorGrowingPanicles))
 RegisterConsoleCommandHandler("bigfatfish_rice_give", function(_, parts)
     local args = parts or {}
@@ -105,7 +110,7 @@ end)
 RegisterConsoleCommandHandler("bigfatfish_rice_status", function()
     run(function()
         local item = itemType()
-        log("v0.3.1-prototype; native rice item mounted=" .. tostring(valid(item)))
+        log("v0.4.0-prototype; native rice item mounted=" .. tostring(valid(item)))
         if valid(item) then log("Inventory rice grain=" .. playerInventory():GetItemCountByType(item)) end
         discoverGrowers();log('Sea Rice plants in this world='..#growers)
         for index,plant in ipairs(growers) do
@@ -129,4 +134,4 @@ RegisterConsoleCommandHandler("bigfatfish_rice_status", function()
     end)
     return true
 end)
-log("v0.3.1-prototype loaded. Commands: bigfatfish_rice_give [count], bigfatfish_rice_status")
+log("v0.4.0-prototype loaded. Commands: bigfatfish_rice_give [count], bigfatfish_rice_status")

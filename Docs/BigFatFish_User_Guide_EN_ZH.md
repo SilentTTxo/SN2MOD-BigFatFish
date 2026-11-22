@@ -1,160 +1,79 @@
 # Big Fat Fish — 使用说明 / User Guide
 
-版本 / Version: **0.5.1-dev**
-更新 / Updated: **2026-11-02**  
-适用环境 / Target: Windows Steam，Subnautica 2 正式分支 / public branch，UE 5.6.1，CL-131439。
+Version / 版本：**0.6.0-dev** · 2026-11-22 · Windows Steam public branch, UE 5.6.1, CL-131439.
 
-## 1. 这是什么 / What it does
-
-Big Fat Fish 在世界中生成鲸鱼娘外观的游泳伙伴，可巡游、停留或在主角前侧以僚机队形跟随。它有平滑头眼追踪、随机眨眼、轻微嘴部动作和独立随机体型。当前为手动召唤的观赏伙伴，不替换原版鱼，也不参与原版生态系统。
-
-Big Fat Fish spawns swimming companions using a whale-girl model. They can wander, stay in place, or follow in a wing formation ahead of the player. Features include smooth head/eye tracking, independent random blinking, subtle mouth motion, and individual random sizes. These are manually spawned visual companions; they do not replace existing fish or participate in the native ecosystem.
-
-## 2. 依赖 / Requirement
+## 依赖 / Requirement
 
 [UE4SS for Subnautica 2](https://www.nexusmods.com/subnautica2/mods/36)
 
-## 3. 安装 / Installation
+## 安装 / Installation
 
-`<game_root>` 是 Steam“管理 → 浏览本地文件”打开的游戏根目录。
+1. 完全退出游戏。 / Fully exit the game.
+2. 将 ZIP 中的 `Subnautica2` 文件夹合并到 Steam“管理 → 浏览本地文件”打开的游戏根目录，更新时覆盖本模组同名文件。 / Merge the ZIP's `Subnautica2` folder into the game root opened through Steam → Manage → Browse local files; replace this mod's matching files when updating.
+3. 启动游戏并载入存档。 / Start the game and load a save.
 
-1. 完全退出游戏。
-2. 将 BigFatFish.pak、BigFatFish.utoc、BigFatFish.ucas 放入 `<game_root>\Subnautica2\Content\Paks\LogicMods\BigFatFish\`；将本模组运行时 BigFatFish 文件夹放入 `<game_root>\Subnautica2\Binaries\Win64\ue4ss\Mods\BigFatFish\`，保留 enabled.txt 和完整 Scripts 文件夹。
-3. 启动游戏，载入存档，等待几秒后使用命令。
+模组自动创建数据目录，不需要手动创建存档文件夹。 / The mod creates its save-data directory automatically.
 
-存档目录由模组自动创建，无需手动操作。更新时同时替换本模组资源和脚本，并完整重启游戏。
+## 海稻与大白饭 / Sea Rice and Steamed Rice
 
-`<game_root>` is the folder opened through Steam → Manage → Browse local files.
+救生舱附近约 25–50 米的合适海底，会随机分布最多八株野生海稻。采收后保留一些海稻，在建造器的种植/植物分类消耗一份，栽种到原版种植槽。测试生长周期为 60 秒。装配台餐食分类：一份海稻 + 一瓶净水，五秒制作一碗大白饭。
 
-1. Fully exit the game.
-2. Put BigFatFish.pak, BigFatFish.utoc, and BigFatFish.ucas in `<game_root>\Subnautica2\Content\Paks\LogicMods\BigFatFish\`. Put the BigFatFish runtime folder in `<game_root>\Subnautica2\Binaries\Win64\ue4ss\Mods\BigFatFish\`, keeping enabled.txt and the complete Scripts folder.
-3. Start the game, load a save, and wait a few seconds before using commands.
+Up to eight wild Sea Rice plants are distributed on suitable seabed roughly 25–50 m from the lifepod. Harvest and keep some grains for planting through the builder's farming/plants category on a native planter. The provisional growth cycle is 60 seconds. Fabricator → Meals: one Sea Rice Grain + one Water makes one Steamed Rice in five seconds.
 
-The save-data folder is created automatically. Update this mod's assets and scripts together, then fully restart the game.
+**吃大白饭只恢复 25 饱食度，不召唤。** 将大白饭丢到世界里，连续超过三秒后吸引一只新大肥鱼。鱼从身后接近掉落的饭碗，伸手抓取、吃完后加入原有僚机跟随。每碗只触发一次；提前捡回或抢饭前捡回会取消，不额外扣除背包物品。演出中可关闭 PDA 观看。
 
-## 4. 第一次使用 / First use
+**Eating rice restores 25 food and does not summon.** Drop a bowl into the world and leave it there for more than three seconds. A new fish approaches from behind, grabs the dropped bowl, eats, then joins the existing companion formation. One bowl triggers once. Picking it up before the grab cancels the offering without an extra inventory charge. Close the PDA to watch the sequence.
 
-载入存档、进入开阔水域，等待日志出现 `Game slot ready`（世界就绪后通常约两秒）。按 **F10 或 `~` / 反引号**打开游戏内控制台。
+新增文本使用原生 FText 本地化：中文游戏只显示中文，其他语言显示英文。 / Native FText localization displays Chinese for Chinese game languages and English for all others.
 
-Load a save, enter open water, and wait for `Game slot ready` in the log, usually about two seconds after the world is ready. Open the in-game console with F10 or the tilde/backtick key.
+## 手势 / Gestures
 
-依次输入 / Enter separately:
+影响主角周围 30 米内的大肥鱼。 / Affects Big Fat Fish within 30 m of the player.
 
-```text
-bigfatfish_spawn 3
-bigfatfish_follow
-```
+| 手势 / Gesture | 反应 / Reaction |
+| --- | --- |
+| 鼓掌 / Clap | 切换手持饭盆形态，再次鼓掌收起。饭盆由大肥鱼双手捧着。 / Toggle the original basin held in the fish's hands. |
+| 挥手 / Wave | 切换巡游与僚机跟随。 / Toggle wander and wing formation follow. |
+| 点赞 / Thumbs up | happy 表情，约七秒后恢复。 / Happy expression, fading after about seven seconds. |
+| 沮丧 / Frustrated | sad 表情。 / Sad expression. |
+| 差评 / Thumbs down | angry 表情。 / Angry expression. |
 
-随后用游戏自身的“保存”保存。保存完成后再退出；下次进入同一世界，应自动重建已保存的鱼，无需再次召唤。 / Save through the game's own save function and let it finish before quitting. Loading the same world should reconstruct the saved fish without another spawn command.
+原有游泳、头颈注视、8° 眼球限角、随机眨眼、轻微嘴型保留。新鱼随机线性大小为基准的 0.5–1.5 倍。 / Existing swim, head/neck gaze, 8° eye clamps, random blinks and subtle mouth motion remain. New fish have a saved random linear size of 0.5–1.5× the baseline.
 
-## 5. 命令表 / Commands
+## 控制台 / Console
 
-| 命令 / Command | 功能 / Effect |
-|---|---|
-| `bigfatfish_spawn` | 新增一只，不替换已有的鱼。 / Add one fish without replacing existing fish. |
-| `bigfatfish_spawn 5` | 新增五只，总数上限 64。 / Add five; maximum total is 64. |
-| `bigfatfish_follow` | 所有鱼进入摄像机前侧两翼队形。第一排约距主角 9～12 米，后排更远。 / All fish follow in front-side wings; the first row is roughly 9–12 m away, with later rows farther out. |
-| `bigfatfish_stay` | 所有鱼停留在当前位置，继续游泳动画、表情和注视。 / Stay at the current locations while swim animation, expressions, and gaze continue. |
-| `bigfatfish_wander` | 所有鱼从当前位置开始环绕巡游。 / Begin a wandering circle from each current location. |
-| `bigfatfish_pause` | 切换位移暂停；不会暂停游泳、眨眼和嘴部动作。 / Toggle movement pause; swim animation, blinking, and mouth motion continue. |
-| `bigfatfish_gaze off` | 平滑关闭所有鱼的头眼注视。 / Smoothly disable head/eye tracking for all fish. |
-| `bigfatfish_gaze on` | 开启头眼注视，默认开启。 / Enable tracking; enabled by default. |
-| `bigfatfish_remove` | 删除本模组当前所有鱼；再进行游戏保存才会持久记录删除。 / Remove all current fish; save the game afterward to persist removal. |
-| `bigfatfish_status` | 在 UE4SS.log 查看版本、数量、存档状态、ID、体型、行为和注视状态。 / Log version, count, save readiness, IDs, sizes, behavior, and gaze status. |
+可使用已配置的游戏控制台键（本地配置为 F10 或反引号）。 / Use the configured game-console key; the local setup uses F10 or backtick.
 
-除 spawn 数量外，目前没有按 ID 单独控制某一只的命令，也没有嘴型/眨眼命令；嘴部动作和眨眼自动播放。旧 `whale_*` 命令已删除。 / There are no per-ID controls or mouth/blink commands in this version. Facial motion runs automatically. Legacy whale_* commands have been removed.
+| 命令 / Command | 作用 / Effect |
+| --- | --- |
+| `bigfatfish_spawn [count]` | 新增，默认一只，总上限 64。 / Add fish, default one, maximum total 64. |
+| `bigfatfish_follow` | 全部僚机跟随。 / All follow in formation. |
+| `bigfatfish_wander` | 全部巡游。 / All wander. |
+| `bigfatfish_stay` | 停留。 / Hold position. |
+| `bigfatfish_pause` | 切换位移暂停。 / Toggle movement pause. |
+| `bigfatfish_gaze on/off` | 注视开关。 / Toggle gaze. |
+| `bigfatfish_remove` | 移除所有鱼；再保存游戏记录删除。 / Remove all fish; save the game afterward. |
+| `bigfatfish_status` | 日志状态。 / Log status. |
+| `bigfatfish_rice_give [count]` | 测试用海稻种子，默认三份，范围 1–20。 / Give test grains, default three, range 1–20. |
+| `bigfatfish_rice_status` | 海稻诊断日志。 / Crop diagnostics. |
 
-## 6. 动画、表情与大小 / Animation, expressions, and size
+## 保存与限制 / Saving and limitations
 
-原始 VRM 没有附带全身动画片段。当前游泳来自 Quaternius，头眼注视由程序控制。模型本身提供以下 **16 个面部形态（Morph Targets，不是 16 段动作）**：
+使用游戏自身的保存。鱼的数量、位置、行为、大小、饭盆开关保存在 `%LOCALAPPDATA%\Subnautica2\Saved\SaveGames\BigFatFish\`，每个世界只有一个 `_current.json` 和一个 `.json.bak`。临时情绪和进食演出不保存；抢到饭之后的新鱼作为普通同伴保存。海稻、野生海稻和大白饭使用游戏原生保存机制；野生植株通过固定 GUID 登记为原生动态物体，读档不重新灌入一批成熟作物。
 
-The original VRM contains no full-body animation clips. The current swim was retargeted from Quaternius, and gaze is procedural. The model provides **16 facial morphs, not 16 animation clips**:
+Use the game's save function. Fish count, transforms, behavior, size and basin toggle use one `_current.json` and one `.json.bak` per world in the path above. Temporary emotions and feeding progress are not saved. After grabbing its serving, the new fish is saved as a normal companion. Crops, wild crops and rice use native saves; stable GUIDs register wild plants with the native dynamic-item manager to prevent reseeding a fresh ripe population on every load.
 
-| 类型 / Type | 原始名称 / Original names | v0.4.0 状态 / Status |
-|---|---|---|
-| 双眼与单眼眨眼 / Both-eye and single-eye blink | `blink`, `blinkLeft`, `blinkRight` | 已接入双眼随机眨眼；左右单眼形态未接入。 / Both-eye random blinking is active; separate winks are not integrated. |
-| 视线形态 / Gaze shapes | `lookup`, `lookDown`, `lookleft`, `lookRight` | 未接入；当前眼神使用眼骨骼。 / Not integrated; current gaze uses eye bones. |
-| 五种口型 / Five mouth shapes | `aa`, `ih`, `ou`, `ee`, `oh` | 已接入 aa/ou 的轻微组合；其他口型未接入。 / Subtle aa/ou blending is active; other shapes are not integrated. |
-| 情绪 / Emotions | `happy`, `angry`, `sad`, `relaxed` | 原模型自带，当前资源包未接入。 / Available in the source model; not integrated in this package. |
+回退游戏旧检查点时，鱼仍使用该世界最新的附属记录；云同步未验证。当前鱼没有碰撞和地形避障。多人、实验分支、Game Pass、Linux 未验证。0.6.0 的资源、语言切换、离线行为与打包检查通过；新演出、手势、野生海稻保存及崩溃修复仍需本机游戏复测。
 
-原模型还有名为 `TiePen` 的头发形态，具体视觉用途未验证，不作为现有动作宣传。当前资源包仅保留已使用的 `BFF_Blink`、`BFF_MouthOpen`、`BFF_MouthRound` 三个形态。扩展表情需要重新导出和烹饪，不能只输入原始形态名称来启用。
+Reverting a native checkpoint still uses the latest fish sidecar for that world; cloud sync is unverified. Fish have no collision or obstacle avoidance. Multiplayer, experimental builds, Game Pass and Linux are unverified. Version 0.6.0 passes asset, culture-switch, offline behavior and packaging checks; its new sequence, gestures, wild-crop persistence and crash fix still require in-game retesting.
 
-The source also has a hair shape named TiePen; its visual purpose is unverified. The current package includes only BFF_Blink, BFF_MouthOpen, and BFF_MouthRound. Adding other expressions requires a new asset export and cook; entering their names does not enable them.
+日志 / Logs: `<game_root>/Subnautica2/Binaries/Win64/ue4ss/UE4SS.log`, `%LOCALAPPDATA%/Subnautica2/Saved/Logs/Subnautica2.log`.
 
-眨眼各自随机，间隔约 2.5～7 秒；嘴巴偶尔轻微张合，不含语音或语音同步。眼球追踪限角为 8°，头部 50°，颈部 15°且权重较低；身后死角和远距离会减弱注视。
+卸载前移除种植物和新物品并保存，再退出游戏，仅移除本包安装的 BigFatFish、BigFatFishRice 目录与资源。附属鱼记录可以保留。 / Before uninstalling, remove crops and custom items in-game and save; then exit and remove only this package's BigFatFish and BigFatFishRice files. Fish sidecars may be kept.
 
-Blinking is independent, roughly every 2.5–7 seconds. Mouth motion is subtle and intermittent, without voice or lip-sync. Eye tracking is limited to 8°, head tracking to 50°, and neck tracking to 15° with a reduced weight. Gaze fades near the rear dead angle and at long distances.
+## 借物表 / Credits
 
-新生成的鱼按基准**线性尺寸**随机取 0.5～1.5 倍，三个轴同比例缩放；不是数学意义上体积随机取该倍率。基准 `config.lua` 的 Scale 为 2，因此实际 Actor Scale 为 1～3。随机倍率只在召唤时生成并保存，旧鱼没有该字段时保持基准大小。
-
-New fish get a uniform random **linear size multiplier** of 0.5–1.5 relative to the baseline, applied equally to all axes; this is not a volume multiplier. The default config Scale is 2, producing an Actor Scale of 1–3. Each multiplier is generated once and saved. Older fish without a saved multiplier keep the baseline size.
-
-## 7. 保存、备份与卸载 / Saves, backups, and removal
-
-保存的内容 / Saved: 数量、ID、位置、巡游中心、朝向、运动阶段、巡游/停留/跟随行为、随机体型。 / Count, IDs, positions, patrol centers, heading, movement phase, wander/stay/follow mode, and size multiplier.
-
-临时内容 / Session-only: 全局位移暂停、注视开关、眨眼与嘴部动作的随机时间表。 / Global movement pause, gaze toggle, and blink/mouth schedules.
-
-数据目录 / Data folder:
-
-```text
-%LOCALAPPDATA%\Subnautica2\Saved\SaveGames\BigFatFish\
-```
-
-每个游戏存档只保留一个 `_current.json` 主记录和一个 `.json.bak` 备份，不再生成时间戳快照。目录在首次写入时自动创建。本模组不修改原版 `.sav`。原版回退旧检查点时，本模组仍加载该世界最新的鱼记录，不会自动回退到同一历史时刻。Steam 云同步未验证；备份和迁移时连同上述整个文件夹一起复制。
-
-Each save-world keeps one _current.json file and one .json.bak backup. Timestamped snapshots are no longer generated. The directory is created automatically on first write. The mod does not edit native .sav files. Loading an older native checkpoint still uses that world's latest fish record rather than rolling fish back to the same historical moment. Cloud sync is unverified; copy this entire folder when backing up or moving saves.
-
-卸载时退出游戏，移除本模组的三件套资源及 `ue4ss\Mods\BigFatFish`，不要删除其他 MOD 或整个 UE4SS。可保留附属数据供重新安装恢复；若想先保存一个没有鱼的状态，先运行 remove 再游戏保存。
-
-To uninstall, exit the game and remove only the BigFatFish containers and ue4ss\Mods\BigFatFish. Keep other mods and UE4SS intact. Sidecars may be retained for reinstalling. To save an empty fish state first, use remove and then save the game.
-
-## 8. 限制与排错 / Limits and troubleshooting
-
-- 当前没有地形避障或碰撞，可能穿过地形/建筑；不是可捕捉、战斗、扫描或繁殖的原生生物。 / No obstacle avoidance or collision; fish may pass through terrain or structures. No native capture, combat, scanning, or breeding integration.
-- 多人同步、Game Pass、Linux 和实验分支未验证，不标为支持。 / Multiplayer synchronization, Game Pass, Linux, and the experimental branch are unverified.
-- 64 是代码上限，不是性能保证；建议先试 1～5 只。 / 64 is a code limit, not a performance guarantee; start with 1–5.
-- 不能开控制台：检查控制台键位和键盘布局。 / No console: check your console key binding and keyboard layout.
-- 输入无反应：确认日志含 v0.5.1 loaded 与 Game slot ready，使用 bigfatfish_* 命令；检查是否缺少 UE4SS API。 / No response: check for v0.5.1 loaded and Game slot ready, correct command spelling, and missing loader APIs.
-- 模型/表情不对：核对三件套与 Lua 是否同版本，完全退出后重启。 / Wrong model or expressions: ensure matching containers and Lua, then fully restart.
-- 读档无鱼：先确认原来进行过成功的游戏保存、该世界的附属文件仍在、目录可写；看日志 restored / Saved / Error 信息。 / Missing fish after loading: check that a game save succeeded, sidecars exist for that world, and the folder is writable; inspect restored, Saved, and Error messages.
-
-日志 / Logs:
-
-```text
-<game_root>\Subnautica2\Binaries\Win64\ue4ss\UE4SS.log
-%LOCALAPPDATA%\Subnautica2\Saved\Logs\Subnautica2.log
-```
-
-当前验证依据：编辑器实际头/颈/双眼姿态及限角、形态导入与权重接口、离线运行时/保存测试、资源包完整性校验；真实运行日志已记录 v0.4.0 加载、重建 3 只并保存 4 只。完整画面表现、体型的游戏内重进对比和多人同步未据此认定通过。
-
-Validation includes actual editor head/neck/eye pose and angle-limit checks, imported morphs and weight APIs, offline runtime/save tests, and package integrity checks. Live logs show v0.4.0 loading, restoring three fish, and saving four. These logs do not by themselves verify every visual detail, an in-game size comparison across reloads, or multiplayer synchronization.
-
-## 9. 借物表 / Credits
-
-- **模型 / Model:** 木子恶魔 / MZEM —《蓝色小肥鱼 Deepseek 鲸鱼娘 VRM》。模型、贴图及原有面部形态归原作者；本模组负责游戏接入和行为，不将模型署为自制。 / Model, textures, and authored facial morphs belong to the original creator. This mod supplies game integration and behavior, not original model authorship.
-- **游泳动作 / Swimming animation:** [Quaternius — Universal Animation Library](https://quaternius.com/packs/universalanimationlibrary.html)，Swim_Fwd_Loop，CC0，已重定向并调整。 / Retargeted and adjusted; CC0.
-- **运行环境 / Runtime:** [UE4SS-RE / RE-UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) 及随附组件作者 / and bundled component contributors.
-- **JSON:** [rxi/json.lua](https://github.com/rxi/json.lua)，MIT；保留随包 json.LICENSE。 / MIT; retain the included json.LICENSE.
-- **游戏 / Game:** Unknown Worlds — Subnautica 2。
-
-模型按原作者使用条件与借物署名要求使用；本模组不授予他人超出原授权范围的模型使用权。 / Use the model under its creator's terms and attribution requirements; this mod does not grant additional model rights.
-
-
-## 海稻与喂食 / Sea Rice and feeding
-
-0.5.1 完整包附带海稻内容。使用建造器种植海稻，收获海稻谷；装配台餐食分类使用 1 份海稻谷 + 1 瓶水制作大白饭。制作已验收。
-
-The complete 0.5.1 package includes Sea Rice. Plant it with the builder and harvest grains; use one grain + one Water at the fabricator Meals category to craft Steamed Rice. Crafting has been accepted in-game.
-
-在背包使用大白饭，会召来一只从身后游近、抢饭并吃掉的大肥鱼，吃完加入跟随。原生背包使用消耗一份，模组不再额外扣除，不再给玩家增加食物/水分。吃完后保存游戏。新演出与使用入口待游戏内验收，联网行为未验证。
-
-Use Steamed Rice from the inventory to attract a companion from behind, watch it grab and eat, then join follow mode. Native inventory use spends one serving; the mod does not remove another; no player food/water restoration is applied. Save after feeding. The sequence and use entry point await in-game validation; multiplayer is unverified.
-
-详细种植说明见 BigFatFish_Rice_Prototype_EN_ZH.md；动作、原始表情和饭盆清单见 BigFatFish_Model_Inventory_EN_ZH.md。
-
-See BigFatFish_Rice_Prototype_EN_ZH.md for farming and BigFatFish_Model_Inventory_EN_ZH.md for the model's animations, expressions and basin prop.
-
-0.5.1：使用后关闭 PDA 再观看演出；修复动作缩小 100 倍及轴向错误，跟随队形只计算跟随中的鱼，巡游鱼不再占位。
-
-0.5.1: Close the PDA after use to watch the sequence. Fixes the feeding clip’s 100x scale/axis mismatch and excludes wanderers from follow formation ranks.
+- 模型、贴图、饭盆及原有形态 / Model, textures, original basin and morphs：**木子恶魔 / MZEM —《蓝色小肥鱼 Deepseek 鲸鱼娘 VRM》**。
+- 游泳 / Swim：Quaternius Universal Animation Library, Swim_Fwd_Loop (CC0).
+- JSON：rxi/json.lua (MIT), license included in `Scripts/json.LICENSE`.
+- 海稻、米饭道具和抢饭/手持动作由本项目制作。 / Crop, rice props and feeding/hold gestures authored for this project.
