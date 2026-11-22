@@ -1,51 +1,64 @@
 {
-  "status": "prototype geometry; native planting validation pending",
+  "status": "sea rice refinement; original harvest flow accepted by user",
   "units": "metres; exported FBX converts to cm",
-  "pivot": "soil/base origin",
+  "pivot": "stalk at soil; panicle at 72 cm crown",
+  "panicle_anchor_cm": 72.0,
+  "smooth_normals": true,
   "provenance": "Original procedural geometry authored by Scripts/create_rice_assets.py; no external model or texture",
   "assets": [
     {
       "name": "SM_BFF_RicePlant",
-      "triangles": 5676,
+      "triangles": 23472,
       "dimensions_metres": [
-        0.483015239238739,
-        0.4851835370063782,
-        0.8054308295249939
+        0.5411913990974426,
+        0.5429061651229858,
+        0.7566289901733398
       ],
-      "material_slots": 4,
+      "material_slots": 7,
       "collision": "configured on native plant template during import"
     },
     {
       "name": "SM_BFF_RiceGrain",
-      "triangles": 336,
+      "triangles": 1008,
       "dimensions_metres": [
-        0.023244891315698624,
-        0.02384267747402191,
+        0.02355705201625824,
+        0.023943472653627396,
         0.013447880744934082
       ],
-      "material_slots": 4,
+      "material_slots": 7,
       "collision": "configured on native plant template during import"
     },
     {
       "name": "SM_BFF_RiceStalk",
-      "triangles": 636,
+      "triangles": 6024,
       "dimensions_metres": [
-        0.483015239238739,
-        0.4851835370063782,
-        0.7593533396720886
+        0.5411913990974426,
+        0.5429061651229858,
+        0.734114408493042
       ],
-      "material_slots": 4,
+      "material_slots": 7,
       "collision": "configured on native plant template during import"
     },
     {
       "name": "SM_BFF_RicePanicle",
-      "triangles": 5040,
+      "triangles": 17448,
       "dimensions_metres": [
-        0.284086138010025,
-        0.2897604703903198,
-        0.25852954387664795
+        0.322364866733551,
+        0.3289506733417511,
+        0.1348799467086792
       ],
-      "material_slots": 4,
+      "material_slots": 7,
+      "collision": "configured on native plant template during import"
+    },
+    {
+      "name": "SM_BFF_CookedRice",
+      "triangles": 15608,
+      "dimensions_metres": [
+        0.14000000059604645,
+        0.14000000059604645,
+        0.07648985087871552
+      ],
+      "material_slots": 7,
       "collision": "configured on native plant template during import"
     }
   ]

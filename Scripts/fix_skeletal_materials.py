@@ -11,11 +11,15 @@ for path in paths:
     if not isinstance(material, unreal.Material):
         continue
     before = material.get_editor_property("used_with_skeletal_mesh")
+    morph_before=material.get_editor_property('used_with_morph_targets')
     material.set_editor_property("used_with_skeletal_mesh", True)
+    material.set_editor_property('used_with_morph_targets',True)
     unreal.MaterialEditingLibrary.recompile_material(material)
     assert material.get_editor_property("used_with_skeletal_mesh"), path
+    assert material.get_editor_property('used_with_morph_targets'),path
     assert unreal.EditorAssetLibrary.save_loaded_asset(material, only_if_is_dirty=False)
-    fixed.append({"material": material.get_path_name(), "before": before, "after": True})
+    fixed.append({"material": material.get_path_name(), "before": before, "after": True,
+                  'morph_before':morph_before,'morph_after':True})
 assert len(fixed) == 6, fixed
 (ROOT / "Logs/material_usage_fix.json").write_text(json.dumps(fixed, indent=2), encoding="utf-8")
 unreal.log("BIGFATFISH_MATERIAL_FLAGS_FIXED " + json.dumps(fixed))

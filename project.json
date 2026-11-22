@@ -1,6 +1,6 @@
 {
   "name": "BigFatFish",
-  "version": "0.4.1-dev",
+  "version": "0.4.2-dev",
   "game_root": "H:\\Steam\\steamapps\\common\\Subnautica2",
   "engine_root": "L:\\游戏mod开发\\SN2_WhaleGirl\\Engine\\SN2-Engine-V4",
   "required_engine_major": 5,
@@ -10,7 +10,7 @@
   "modkit_declared_engine": "5.6",
   "custom_engine_release_verified": true,
   "chunk_id": 237,
-  "state": "v041_installed_auto_directory_single_current_and_backup_tests_passed_restart_required",
+  "state": "v042_morph_material_fix_installed_offline_checks_passed_game_retest_pending",
   "previous_log_engine": "5.7.4-136704 (experimental branch; stale log)",
   "unreal_project": "ContentProject/Subnautica2.uproject",
   "content_only": true,

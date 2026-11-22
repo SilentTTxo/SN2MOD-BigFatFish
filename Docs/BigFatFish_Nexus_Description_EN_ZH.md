@@ -1,6 +1,6 @@
 # Big Fat Fish — Swimming Companions
 
-Version / 版本：0.4.1-dev
+Version / 版本：0.4.2-dev
 
 ## English
 

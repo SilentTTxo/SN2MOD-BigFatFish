@@ -1,12 +1,14 @@
-# Big Fat Fish — Rice planting prototype / 水稻种植原型
+# Big Fat Fish — Sea Rice / 海稻
 
-Version / 版本：0.1.0-prototype · Target / 目标：Windows Steam，UE 5.6.1，CL-131439。
+Version / 版本：0.2.0-prototype · Windows Steam，UE 5.6.1，CL-131439。
 
-此包为单独测试的水稻种植内容，包含原生稻谷物品、水稻建造配方、植株、可采收稻穗及测试命令。米饭制作和召唤大肥鱼在后续阶段接入。本版不修改大肥鱼现有文件。
+增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.4.2 更新修复眨眼、嘴型启用时脸部材质回退的问题。
 
-This separate prototype contains a native rice-grain item, a builder planting recipe, a rice plant, harvestable panicles, and test commands. Cooked rice and fish summoning are later stages. Existing BigFatFish files are not modified.
+Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.4.2 update fixes face materials falling back when blink or mouth morphs activate.
 
-验证状态 / Validation：已通过编辑器保存后重新加载检查、16 个资源的容器完整性检查、烹饪和游戏启动挂载检查，测试命令已加载。实际种植、采收和存档恢复待验证。 / Passed editor save/reload checks, integrity checks for 16 assets, cooking, native game startup mounting, and test-command loading. Planting, harvesting, and gameplay save restoration remain unverified.
+种植和采收已由玩家验收。新版外观、米饭制作/食用、再次结穗和存档恢复仍需游戏内验证。大白饭召唤大肥鱼尚未接入。
+
+Planting and harvesting have been accepted by the player. Updated visuals, crafting/consumption, regrowth, and save restoration still need in-game validation. Summoning a fish with Steamed Rice is not implemented yet.
 
 ## 依赖 / Requirement
 
@@ -15,53 +17,50 @@ This separate prototype contains a native rice-grain item, a builder planting re
 ## 安装 / Installation
 
 1. 完全退出游戏。 / Fully exit the game.
-2. 将 ZIP 中的 `Subnautica2` 文件夹合并到游戏根目录（Steam → 管理 → 浏览本地文件）。 / Merge the archive's `Subnautica2` folder into the game root opened via Steam → Manage → Browse local files.
-3. 启动游戏并载入有原版种植槽/水培设施的存档。 / Start the game and load a save with an unlocked native planter/aquafarm.
+2. 将 ZIP 中的 `Subnautica2` 文件夹合并到游戏根目录（Steam → 管理 → 浏览本地文件），更新时覆盖本模组同名文件。 / Merge the archive's `Subnautica2` folder into the game root opened via Steam → Manage → Browse local files; replace this mod's matching files when updating.
+3. 启动游戏，载入已解锁原版种植设施的存档。 / Start the game and load a save with native farming unlocked.
 
-本包自己的内容位于 / This package's files are placed in:
+## 使用 / Use
+
+控制台测试命令 / Console test commands:
+
+```text
+bigfatfish_rice_give 3
+bigfatfish_rice_status
+```
+
+1. 背包获得 `Sea Rice Grain / 海稻谷`。 / Receive Sea Rice Grain in your inventory.
+2. 在建造器的原版种植/植物分类选择 `Sea Rice / 海稻`，消耗 1 份海稻谷栽种在原版种植槽上。 / Choose Sea Rice in the builder's farming/plants category and spend one grain to plant it on a native planter.
+3. 等待约 60 秒采收成熟稻穗；60 秒为测试周期。 / Harvest ripe panicles after roughly 60 seconds; this duration is provisional for testing.
+4. 在装配台的餐食分类寻找 `Steamed Rice / 大白饭`。1 份海稻谷 + 1 瓶水 → 1 碗大白饭，制作时间 5 秒。物品配置为可从背包食用，食物 +25、水分 +5，实际效果待验收。 / Find Steamed Rice in the fabricator's Meals category. One Sea Rice Grain + one bottle of Water yields one bowl in five seconds. It is configured as inventory-consumable with +25 food and +5 water; actual behavior needs validation.
+5. 使用游戏自身的保存，分别检查生长中、成熟、采收后和制作米饭后的保存/重载。 / Use the game's save function and check save/reload while growing, when ripe, after harvesting, and after crafting rice.
+
+旧版已存在的稻穗如位置异常，先采收一次并等待重新结穗，或对比新栽的海稻；更新保留原有资源 ID，不会主动删除植株或背包物品。
+
+If panicles created by the previous version are misplaced, harvest once and wait for regrowth, or compare with a newly planted crop. Asset IDs are retained; the update does not delete plants or inventory items.
+
+## 保存 / Saving
+
+海稻和大白饭接入原生物品、建造和保存组件，不创建额外 JSON 数据目录。保存恢复效果仍需游戏内验收。
+
+Sea Rice and Steamed Rice use native items, construction, and save components. They create no extra JSON data directory. Persistence still requires in-game validation.
+
+## 排错与卸载 / Troubleshooting and removal
+
+- 新版菜谱未出现：完全重启游戏，确认 `BigFatFishRice` 内容包目录正确，并保留日志。 / If the new recipe is missing, fully restart the game, verify the BigFatFishRice content location, and keep the logs.
+- 日志 / Log：`<game_root>/Subnautica2/Binaries/Win64/ue4ss/UE4SS.log`，搜索 / search `BigFatFishRice`；游戏日志 / game log：`%LOCALAPPDATA%/Subnautica2/Saved/Logs/Subnautica2.log`。
+- 卸载前在游戏中拆除海稻、清空海稻谷和大白饭并保存，再退出，移除本包的两个目录。 / Before uninstalling, remove the crop, grains and cooked rice in-game and save; then exit and remove the two directories below.
 
 ```text
 <game_root>/Subnautica2/Mods/BigFatFishRice/
 <game_root>/Subnautica2/Binaries/Win64/ue4ss/Mods/BigFatFishRice/
 ```
 
-## 第一轮测试 / First test
+## 开发 / Development
 
-打开控制台输入 / Open the console and enter:
+海稻、谷粒、碗饭、贴图和图标为本项目使用 Blender 程序制作的原创原型，使用原版种植/餐食分类及原生放置规则。
 
-```text
-bigfatfish_rice_status
-bigfatfish_rice_give 3
-```
-
-1. 背包中应出现 `Rice Grain / 稻谷`，带稻谷图标。 / Check for Rice Grain in the inventory with its grain icon.
-2. 打开建造器，在原版种植/植物分类中寻找 `Rice / 水稻`。当前版本原生作物通过建造器在种植槽表面栽种。 / Open the builder's farming/plants category and find Rice. The target game's farming system places plants on planters using the builder.
-3. 消耗 1 份稻谷栽种一株，等待约 60 秒，尝试采收成熟稻穗。 / Spend one rice grain to plant a stalk, wait roughly 60 seconds, and try harvesting its ripe panicles.
-4. 分别在生长中、成熟后、采收后使用游戏自身的保存，退出并重新载入，检查植株和背包物品。 / Save with the game's own save function while growing, when ripe, and after harvesting; quit/reload and check plants and inventory.
-
-60 秒是方便测试的暂定周期。水稻模型为本项目程序制作的原型。存活茎叶与可采收稻穗分开；稻穗通过原生种子生长组件成熟。是否按预期再次结穗，以及保存后的生长进度，需要游戏内验证。
-
-The 60-second cycle is provisional for testing. Geometry is authored procedurally for this project. Stalks and harvestable panicles are separate meshes; the panicles ripen through the native seed grower. Regrowth and saved growth progress require in-game verification.
-
-## 保存 / Saving
-
-本原型使用游戏的原生背包、建造物及 `UWESaveComponent` 保存。不会生成额外的水稻 JSON 或按时间增长的备份文件。最终效果以游戏内保存/重载测试为准。
-
-This prototype uses native inventory/buildable saving and UWESaveComponent. It creates no rice JSON sidecars or accumulating timestamped backups. Actual persistence remains subject to in-game save/reload tests.
-
-## 排错与卸载 / Troubleshooting and removal
-
-- `native rice item mounted=false`：检查内容包目录，完全重启游戏。 / Check the native content directory and fully restart the game.
-- 有稻谷但建造菜单没有水稻：保留日志，检查原版种植设施是否已经解锁。 / Keep logs and check whether native farming is unlocked.
-- 无法栽种、采收或读档恢复：记录操作时机与日志，不代表这些环节已经验证成功。 / Record the operation and logs if planting, harvesting, or persistence fails; these remain test points.
-- 日志 / Log：`<game_root>/Subnautica2/Binaries/Win64/ue4ss/UE4SS.log`，搜索 / search `BigFatFishRice`。
-- 卸载前建议先在游戏内拆除水稻、清空稻谷并保存，再退出游戏移除上述两个 `BigFatFishRice` 文件夹。 / Before uninstalling, remove rice plants and grains in-game and save, then exit and remove the two BigFatFishRice folders listed above.
-
-## 资源 / Assets
-
-水稻、稻穗、稻谷模型和图标由 `Scripts/create_rice_assets.py` 使用 Blender 制作；原型使用原版种植分类和放置规则。 / Rice geometry and the grain icon are authored with Blender by Scripts/create_rice_assets.py; the prototype uses the game's native farming category and planter rules.
-
-开发命令 / Development commands:
+The crop, grains, rice bowl, textures and icons are original procedural Blender assets authored for this project. Native farming/meal categories and planter rules are reused.
 
 ```text
 python Scripts/rice_workflow.py prepare
@@ -72,4 +71,4 @@ python Scripts/rice_workflow.py package
 python Scripts/rice_workflow.py install
 ```
 
-开发环境沿用本项目定制引擎和 Modkit；prepare 会在 Build/Tests 中创建隔离工程。 / Development reuses the matched custom editor and local Modkit; prepare creates an isolated workspace under Build/Tests.
+开发沿用本项目匹配的定制引擎和 Modkit；prepare 在 Build/Tests 创建隔离工程。 / Development reuses the matched custom editor and local Modkit; prepare creates an isolated project in Build/Tests.

@@ -1,6 +1,6 @@
 # Big Fat Fish — 使用说明 / User Guide
 
-版本 / Version: **0.4.1-dev**  
+版本 / Version: **0.4.2-dev**
 更新 / Updated: **2026-11-02**  
 适用环境 / Target: Windows Steam，Subnautica 2 正式分支 / public branch，UE 5.6.1，CL-131439。
 
@@ -115,7 +115,7 @@ To uninstall, exit the game and remove only the BigFatFish containers and ue4ss\
 - 多人同步、Game Pass、Linux 和实验分支未验证，不标为支持。 / Multiplayer synchronization, Game Pass, Linux, and the experimental branch are unverified.
 - 64 是代码上限，不是性能保证；建议先试 1～5 只。 / 64 is a code limit, not a performance guarantee; start with 1–5.
 - 不能开控制台：检查控制台键位和键盘布局。 / No console: check your console key binding and keyboard layout.
-- 输入无反应：确认日志含 v0.4.1 loaded 与 Game slot ready，使用 bigfatfish_* 命令；检查是否缺少 UE4SS API。 / No response: check for v0.4.1 loaded and Game slot ready, correct command spelling, and missing loader APIs.
+- 输入无反应：确认日志含 v0.4.2 loaded 与 Game slot ready，使用 bigfatfish_* 命令；检查是否缺少 UE4SS API。 / No response: check for v0.4.2 loaded and Game slot ready, correct command spelling, and missing loader APIs.
 - 模型/表情不对：核对三件套与 Lua 是否同版本，完全退出后重启。 / Wrong model or expressions: ensure matching containers and Lua, then fully restart.
 - 读档无鱼：先确认原来进行过成功的游戏保存、该世界的附属文件仍在、目录可写；看日志 restored / Saved / Error 信息。 / Missing fish after loading: check that a game save succeeded, sidecars exist for that world, and the folder is writable; inspect restored, Saved, and Error messages.
 

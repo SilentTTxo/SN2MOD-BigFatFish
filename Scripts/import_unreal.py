@@ -113,6 +113,7 @@ def main():
         # This project disables automatic material usage. SetMaterialUsage is
         # conditional on that editor option and can silently leave the flag off.
         material.set_editor_property("used_with_skeletal_mesh", True)
+        material.set_editor_property('used_with_morph_targets',True)
         assert material.get_editor_property("used_with_skeletal_mesh")
         # Expression atlas uses transparency. Other slots remain opaque for v0.1.
         if entry["material"] == "expression":

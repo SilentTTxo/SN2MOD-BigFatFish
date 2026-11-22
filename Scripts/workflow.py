@@ -80,23 +80,23 @@ def main():
         run([engine / "Engine/Build/BatchFiles/Build.bat", "Subnautica2Editor", "Win64", "Development", f"-Project={project}", "-WaitMutex", "-NoHotReloadFromIDE"])
         return
     if options.action == "import":
-        run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/import_unreal.py'}", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput", "-UTF8Output"])
+        run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/import_unreal.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput", "-UTF8Output"])
         if not report_path.is_file():
             raise RuntimeError("Unreal import did not create its success report")
         if SETTINGS.get("gaze_enabled"):
-            run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/build_gaze_animation.py'}", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
+            run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/build_gaze_animation.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
         return
     if options.action == "verify":
-        run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/verify_unreal_assets.py'}", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
+        run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/verify_unreal_assets.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
         if SETTINGS.get("face_enabled"):
-            run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/verify_face_assets.py'}", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
+            run([editor, project, "-run=pythonscript", f"-script={ROOT / 'Scripts/verify_face_assets.py'}", "-ddc=InstalledNoZenLocalFallback", "-unattended", "-nop4", "-nosplash", "-stdout", "-FullStdOutLogOutput"])
         if not (ROOT / "Logs/unreal_asset_validation.json").is_file():
             raise RuntimeError("Persisted Unreal asset validation failed")
         return
     if not report_path.is_file():
         raise RuntimeError("Import and validate the Unreal assets before cooking or installing")
     if options.action == "cook":
-        run([engine / "Engine/Build/BatchFiles/RunUAT.bat", "BuildCookRun", f"-project={project}", "-platform=Win64", "-clientconfig=Shipping", "-skipbuild" if SETTINGS.get("content_only", False) else "-build", "-cook", "-stage", "-pak", "-iostore", "-archive", f"-archivedirectory={build}", "-nocompileeditor", "-installed", "-nop4", "-utf8output", "-unattended"])
+        run([engine / "Engine/Build/BatchFiles/RunUAT.bat", "BuildCookRun", f"-project={project}", "-platform=Win64", "-clientconfig=Shipping", "-skipbuild" if SETTINGS.get("content_only", False) else "-build", "-AdditionalCookerOptions=-ddc=InstalledNoZenLocalFallback", "-cook", "-stage", "-pak", "-iostore", "-archive", f"-archivedirectory={build}", "-nocompileeditor", "-installed", "-nop4", "-utf8output", "-unattended"])
         pak_root = build / "Windows/Subnautica2/Content/Paks"
         sources = [pak_root / f"pakchunk{SETTINGS['chunk_id']}-Windows.{extension}" for extension in ["pak", "utoc", "ucas"]]
         if not all(p.is_file() for p in sources):

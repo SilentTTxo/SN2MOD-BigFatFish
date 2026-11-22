@@ -5,6 +5,10 @@ import unreal
 ROOT=Path(__file__).resolve().parents[1]
 mesh=unreal.load_asset('/Game/Mods/BigFatFish/Character/SK_BigFatFish')
 names=[str(n) for n in mesh.get_all_morph_target_names()]
+for slot in mesh.get_editor_property('materials'):
+    material=slot.get_editor_property('material_interface')
+    assert material and material.get_editor_property('used_with_skeletal_mesh'), str(material)
+    assert material.get_editor_property('used_with_morph_targets'), str(material)
 bindings={}
 for key,suffix in {'blink':'BFF_Blink','mouthOpen':'BFF_MouthOpen','mouthRound':'BFF_MouthRound'}.items():
     found=[n for n in names if n.endswith(suffix)]
