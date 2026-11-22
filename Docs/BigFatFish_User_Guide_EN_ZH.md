@@ -1,6 +1,6 @@
 # Big Fat Fish — 使用说明 / User Guide
 
-版本 / Version: **0.5.0-dev**
+版本 / Version: **0.5.1-dev**
 更新 / Updated: **2026-11-02**  
 适用环境 / Target: Windows Steam，Subnautica 2 正式分支 / public branch，UE 5.6.1，CL-131439。
 
@@ -115,7 +115,7 @@ To uninstall, exit the game and remove only the BigFatFish containers and ue4ss\
 - 多人同步、Game Pass、Linux 和实验分支未验证，不标为支持。 / Multiplayer synchronization, Game Pass, Linux, and the experimental branch are unverified.
 - 64 是代码上限，不是性能保证；建议先试 1～5 只。 / 64 is a code limit, not a performance guarantee; start with 1–5.
 - 不能开控制台：检查控制台键位和键盘布局。 / No console: check your console key binding and keyboard layout.
-- 输入无反应：确认日志含 v0.5.0 loaded 与 Game slot ready，使用 bigfatfish_* 命令；检查是否缺少 UE4SS API。 / No response: check for v0.5.0 loaded and Game slot ready, correct command spelling, and missing loader APIs.
+- 输入无反应：确认日志含 v0.5.1 loaded 与 Game slot ready，使用 bigfatfish_* 命令；检查是否缺少 UE4SS API。 / No response: check for v0.5.1 loaded and Game slot ready, correct command spelling, and missing loader APIs.
 - 模型/表情不对：核对三件套与 Lua 是否同版本，完全退出后重启。 / Wrong model or expressions: ensure matching containers and Lua, then fully restart.
 - 读档无鱼：先确认原来进行过成功的游戏保存、该世界的附属文件仍在、目录可写；看日志 restored / Saved / Error 信息。 / Missing fish after loading: check that a game save succeeded, sidecars exist for that world, and the folder is writable; inspect restored, Saved, and Error messages.
 
@@ -143,14 +143,18 @@ Validation includes actual editor head/neck/eye pose and angle-limit checks, imp
 
 ## 海稻与喂食 / Sea Rice and feeding
 
-0.5.0 完整包附带海稻内容。使用建造器种植海稻，收获海稻谷；装配台餐食分类使用 1 份海稻谷 + 1 瓶水制作大白饭。制作已验收。
+0.5.1 完整包附带海稻内容。使用建造器种植海稻，收获海稻谷；装配台餐食分类使用 1 份海稻谷 + 1 瓶水制作大白饭。制作已验收。
 
-The complete 0.5.0 package includes Sea Rice. Plant it with the builder and harvest grains; use one grain + one Water at the fabricator Meals category to craft Steamed Rice. Crafting has been accepted in-game.
+The complete 0.5.1 package includes Sea Rice. Plant it with the builder and harvest grains; use one grain + one Water at the fabricator Meals category to craft Steamed Rice. Crafting has been accepted in-game.
 
-在背包使用大白饭，会召来一只从身后游近、抢饭并吃掉的大肥鱼，吃完加入跟随。抢到时扣除一份，不再给玩家增加食物/水分。吃完后保存游戏。新演出与使用入口待游戏内验收，联网行为未验证。
+在背包使用大白饭，会召来一只从身后游近、抢饭并吃掉的大肥鱼，吃完加入跟随。原生背包使用消耗一份，模组不再额外扣除，不再给玩家增加食物/水分。吃完后保存游戏。新演出与使用入口待游戏内验收，联网行为未验证。
 
-Use Steamed Rice from the inventory to attract a companion from behind, watch it grab and eat, then join follow mode. One serving is spent at the grab; no player food/water restoration is applied. Save after feeding. The sequence and use entry point await in-game validation; multiplayer is unverified.
+Use Steamed Rice from the inventory to attract a companion from behind, watch it grab and eat, then join follow mode. Native inventory use spends one serving; the mod does not remove another; no player food/water restoration is applied. Save after feeding. The sequence and use entry point await in-game validation; multiplayer is unverified.
 
 详细种植说明见 BigFatFish_Rice_Prototype_EN_ZH.md；动作、原始表情和饭盆清单见 BigFatFish_Model_Inventory_EN_ZH.md。
 
 See BigFatFish_Rice_Prototype_EN_ZH.md for farming and BigFatFish_Model_Inventory_EN_ZH.md for the model's animations, expressions and basin prop.
+
+0.5.1：使用后关闭 PDA 再观看演出；修复动作缩小 100 倍及轴向错误，跟随队形只计算跟随中的鱼，巡游鱼不再占位。
+
+0.5.1: Close the PDA after use to watch the sequence. Fixes the feeding clip’s 100x scale/axis mismatch and excludes wanderers from follow formation ranks.

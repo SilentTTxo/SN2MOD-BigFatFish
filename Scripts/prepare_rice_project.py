@@ -58,9 +58,9 @@ shutil.copy2(ROOT/'Modkit/Releases/SN2Base/Windows/AssetRegistry.bin',release/'A
 (ROOT/"RiceContent").mkdir(exist_ok=True)
 source_plugin=ROOT/"RiceContent/BigFatFishRice"
 source_plugin.mkdir(exist_ok=True)
-descriptor={"FileVersion":3,"Version":3,"VersionName":"0.3.0-prototype","FriendlyName":"Big Fat Fish - Rice",
+descriptor={"FileVersion":3,"Version":4,"VersionName":"0.3.1-prototype","FriendlyName":"Big Fat Fish - Rice",
     "Description":"Native rice planting prototype","Category":"Mods","CreatedBy":"SilentTTxo",
-    "CanContainContent":True,"EnabledByDefault":True,"Installed":True,"IsBetaVersion":True,"SemVersion":"0.3.0","RequiredOnRemote":False}
+    "CanContainContent":True,"EnabledByDefault":True,"Installed":True,"IsBetaVersion":True,"SemVersion":"0.3.1","RequiredOnRemote":False}
 (source_plugin/"BigFatFishRice.uplugin").write_text(json.dumps(descriptor,indent=2),encoding='utf8')
 shutil.copytree(source_plugin,project/"Plugins/BigFatFishRice",dirs_exist_ok=True)
 print(project/"Subnautica2.uproject", "farming schema objects:", count)

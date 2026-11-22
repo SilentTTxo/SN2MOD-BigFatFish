@@ -24,7 +24,7 @@ def block(cls,name,props,pins):
     return '\n'.join(['Begin Object Class=/Script/BlueprintGraph.'+cls+' Name="'+name+'"',props,'NodeGuid='+uuid.uuid4().hex.upper(),*pins,'End Object'])
 text='\n'.join([
     block('K2Node_Event','OfferActivate','EventReference=(MemberParent="/Script/CoreUObject.Class\'/Script/GameplayAbilities.GameplayAbility\'",MemberName="K2_ActivateAbility")\nbOverrideFunction=True',[pin('then',True)]),
-    block('K2Node_CallFunction','OfferEnd','FunctionReference=(MemberParent="/Script/CoreUObject.Class\'/Script/GameplayAbilities.GameplayAbility\'",MemberName="K2_EndAbility",bSelfContext=True)',[pin('execute'),pin('then',True)]),
+    block('K2Node_CallFunction','OfferEnd','FunctionReference=(MemberParent="/Script/CoreUObject.Class\'/Script/GameplayAbilities.GameplayAbility\'",MemberName="K2_CommitAbility",bSelfContext=True)',[pin('execute'),pin('then',True),pin('ReturnValue',True,'bool')]),
 ])
 import_nodes(graph,text)
 nodes={n:unreal.find_object(graph,n) for n in ('OfferActivate','OfferDispatch','OfferEnd')}
@@ -52,7 +52,7 @@ for index,slot in enumerate(mesh.get_editor_property('static_materials')):sc.set
 assert unreal.EditorAssetLibrary.save_loaded_asset(serving,False)
 item=unreal.load_asset(BASE+'/Data/DA_BFF_CookedRice_ItemType');assert item
 set_properties(item,'Abilities(0)="'+bp.generated_class().get_path_name()+'"\nTunableData=()\nbUseFromInventory=True')
-item.set_editor_property('ItemDescription',unreal.Text('Offer this rice to attract a hungry Big Fat Fish. / 拿出大白饭，吸引一只饥饿的大肥鱼来抢饭。'))
+item.set_editor_property('ItemDescription',unreal.Text('Offer rice, then close the PDA to watch a new Big Fat Fish swim in and eat. / 使用后关闭 PDA，观看一只新大肥鱼从身后游来抢饭。'))
 assert unreal.EditorAssetLibrary.save_loaded_asset(item,False)
 (ROOT/'Logs/rice/use_ability_report.json').write_text(json.dumps({'status':'built_pending_game_test','class':bp.generated_class().get_path_name(),'copied_native_input':copied,'event':'K2_ActivateAbility (filtered to GA_BFF_OfferRice_C)'},indent=2),encoding='utf8')
 print('RICE_OFFER_ABILITY_READY',flush=True)

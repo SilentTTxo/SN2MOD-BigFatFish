@@ -49,6 +49,19 @@ if settings.get('feeding_enabled'):
     assert isinstance(feeding,unreal.AnimSequence)
     assert abs(feeding.get_editor_property('sequence_length')-4.8)<.05
     assert feeding.get_editor_property('skeleton')==mesh.get_editor_property('skeleton')
+    options=unreal.AnimPoseEvaluationOptions()
+    swim_first=unreal.AnimPoseExtensions.get_anim_pose_at_time(animation,0.,options)
+    feed_first=unreal.AnimPoseExtensions.get_anim_pose_at_time(feeding,0.,options)
+    for bone in ('head','neck','hand_L','hand_R'):
+        a=unreal.AnimPoseExtensions.get_bone_pose(swim_first,bone,unreal.AnimPoseSpaces.WORLD)
+        b=unreal.AnimPoseExtensions.get_bone_pose(feed_first,bone,unreal.AnimPoseSpaces.WORLD)
+        assert (a.translation-b.translation).length()<.3,(bone,a,b)
+    swim_reach=unreal.AnimPoseExtensions.get_anim_pose_at_time(animation,1.6,options)
+    feed_reach=unreal.AnimPoseExtensions.get_anim_pose_at_time(feeding,1.6,options)
+    for bone in ('hand_L','hand_R'):
+        a=unreal.AnimPoseExtensions.get_bone_pose(swim_reach,bone,unreal.AnimPoseSpaces.WORLD)
+        b=unreal.AnimPoseExtensions.get_bone_pose(feed_reach,bone,unreal.AnimPoseSpaces.WORLD)
+        assert (a.translation-b.translation).length()>10,(bone,'Reach gesture is missing')
     feeding_slots=gaze.get_nodes_of_class(unreal.AnimGraphNode_Slot)
     assert len(feeding_slots)==1 and str(feeding_slots[0].get_editor_property('node').get_editor_property('slot_name'))=='DefaultSlot'
 bounds = mesh.get_bounds()

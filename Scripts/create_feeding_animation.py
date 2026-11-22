@@ -5,6 +5,7 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'SourceAssets/WhaleGirl_Swim_Preview.blend'))
 rig=bpy.data.objects['WhaleGirl_Rig'];scene=bpy.context.scene
+scene.unit_settings.system='METRIC';scene.unit_settings.scale_length=1
 source=rig.animation_data.action;assert source
 constraints=[];targets=[]
 for side in ('L','R'):

@@ -120,7 +120,8 @@
     "file": "BigFatFish_GrabEat.fbx",
     "duration_seconds": 4.8,
     "provenance": "New reach/grab/eat arm IK gesture baked over existing Quaternius swim retarget",
-    "sha256": "604819c068c966a2f51bc62d4d805436a96ecbde9d558934a6d10e6a77e65602",
-    "game_validation": "pending"
+    "sha256": "0f2d8815a7810f05dcaae4ffd179245b35c683dade3677b97392c5e67e0358a8",
+    "game_validation": "pending",
+    "units": "METRIC, scale_length=1, same front-X import as swim"
   }
 }

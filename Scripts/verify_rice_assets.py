@@ -72,6 +72,7 @@ assert bowl_cdo.get_editor_property('ItemType')==cooked
 assert bowl_cdo.get_editor_property('Mesh').get_editor_property('static_mesh').get_name()=='SM_BFF_CookedRice'
 for name in ('RiceStem','RiceLeaf','RiceGrain','RiceGrainLight','RiceBowl','CookedRice','CookedRiceShade'):
     material=unreal.load_asset(BASE+'/Materials/M_'+name);assert material
+    assert material.get_editor_property('used_with_nanite'),name
     material_text=export(material,'material_'+name)
     assert 'T_BFF_'+name+'_Color' in material_text,name
 for name in ('SM_BFF_RicePlant','SM_BFF_RiceStalk','SM_BFF_RicePanicle','SM_BFF_RiceGrain','SM_BFF_CookedRice','SM_BFF_EmptyRiceBowl'):
@@ -88,7 +89,7 @@ assert unreal.load_asset(BASE+'/Blueprints/GA_BFF_OfferRice')
 assert unreal.load_asset(BASE+'/Blueprints/BP_BFF_RiceServing')
 report.update(status='PASS: persisted native rice item, builder recipe, planter rules, growth, save/replication components and pickups',
               components={name:obj.get_class().get_path_name() for name,obj in components.items()},
-              ripening_seconds=60,panicle_anchor_cm=72,version='0.3.0-prototype',
-              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.3.0 visuals, cooking and save/reload await game test')
+              ripening_seconds=60,panicle_anchor_cm=72,version='0.3.1-prototype',
+              gameplay_validation='Planting and harvest accepted in v0.1.0; v0.3.1 visuals, cooking and save/reload await game test')
 (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
 print('RICE_VALIDATION_PASS',json.dumps(report),flush=True)

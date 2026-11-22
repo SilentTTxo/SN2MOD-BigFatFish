@@ -4,13 +4,13 @@ Swimming whale-girl companions for Subnautica 2, with formation following, head 
 
 为《深海迷航 2》添加鲸鱼娘外观的游泳伙伴，支持僚机跟随、头眼注视、随机眨眼、轻微嘴部动作、随机体型和存档保存。
 
-**Version / 版本:** `0.5.0-dev`
+**Version / 版本:** `0.5.1-dev`
 
-0.5.0 fixes gray face fallback during blinking/mouth animation by cooking morph-compatible material shaders. / 0.5.0 补齐表情变形材质着色器，修复眨眼、嘴型启用时脸部变灰的问题；待游戏内复测。
+0.5.1 fixes double rice consumption, feeding animation scale/orientation, sequence timing under the backpack UI, and follower ranks polluted by wanderers. / 0.5.1 修复大白饭重复扣除、抢饭动作尺寸/轴向错误、背包界面遮挡演出及巡游鱼占用跟随队形序号的问题。使用后关闭 PDA 观看演出。
 
 **Tested target / 已验证目标环境:** Windows Steam public branch / 正式分支，UE 5.6.1，CL-131439. Other game builds are unverified / 其他游戏版本未验证。
 
-[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.5.0-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
+[Download ZIP / 下载模组](Build/Releases/BigFatFish-0.5.1-dev.zip) · [User guide / 中英双语说明](Docs/BigFatFish_User_Guide_EN_ZH.md) · [Nexus description / Nexus 发布文案](Docs/BigFatFish_Nexus_Description_EN_ZH.md)
 
 ## English
 
@@ -124,9 +124,9 @@ bigfatfish_follow
 
 ## Sea Rice and feeding / 海稻与抢饭召唤
 
-The complete `0.5.0-dev` package includes Sea Rice `0.3.0-prototype`. Plant and harvest rice, then craft Steamed Rice at the fabricator Meals category with one grain + one Water. Crafting has been accepted in-game. Using a bowl starts a newly authored 4.8-second behind-player arrival, grab and eating gesture, followed by companion formation. One serving is deducted on the grab; player nutrition is not restored.
+The complete `0.5.1-dev` package includes Sea Rice `0.3.1-prototype`. Plant and harvest rice, then craft Steamed Rice at the fabricator Meals category with one grain + one Water. Crafting has been accepted in-game. Use a bowl and close the PDA: the fish approaches from behind, then plays the 4.8-second grab/eat clip at a slower rate before joining companion formation (roughly ten seconds in total). Native backpack use spends one serving, with no extra mod debit; player nutrition is not restored.
 
-`0.5.0-dev` 完整包包含海稻 `0.3.0-prototype`：种植、采收后在装配台餐食分类用 1 份海稻谷 + 1 瓶水制作大白饭（制作已验收）。使用大白饭后，新伙伴从身后绕到前方抢饭、吃饭，然后加入跟随。抢到时扣除一份，不给玩家增加饱食/水分。
+`0.5.1-dev` 完整包包含海稻 `0.3.1-prototype`：种植、采收后在装配台餐食分类用 1 份海稻谷 + 1 瓶水制作大白饭（制作已验收）。使用大白饭后，新伙伴从身后绕到前方抢饭、吃饭，然后加入跟随。由原生背包使用消耗一份，模组不再额外扣除，不给玩家增加饱食/水分。
 
 This update fixes meshes accidentally retaining WorldGridMaterial, uses the valid native farming hint, and anchors panicles at the crown, including existing growers. Resource checks and transaction tests pass; appearance, in-game activation, animation alignment, regrowth, saving and multiplayer still require relevant game tests.
 

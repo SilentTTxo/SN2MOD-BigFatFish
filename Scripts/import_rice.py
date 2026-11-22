@@ -108,6 +108,7 @@ def main():
         assert graph.connect_material_property(glow,'',unreal.MaterialProperty.MP_EMISSIVE_COLOR)
         material.set_editor_property('two_sided',True)
         material.set_editor_property('used_with_instanced_static_meshes',True)
+        material.set_editor_property('used_with_nanite',True)
         graph.recompile_material(material);save(material);materials[name]=material
     for mesh in meshes.values():
         slots=mesh.get_editor_property('static_materials')

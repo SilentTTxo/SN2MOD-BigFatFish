@@ -225,5 +225,17 @@ assert(directoryReady,"Deleted directory is recreated on retry")
 data.version=999;assert(not pcall(Storage.validate,data,context), "Reject future schema")
 data.version=1;data.saveId="wrong";assert(not pcall(Storage.validate,data,context), "Reject wrong SaveId")
 data.saveId=guid;data.checkpoint="20261101200112000";assert(not pcall(Storage.validate,data,context), "Reject wrong checkpoint")
+-- Regression from the real save: 55 wanderers must not reserve 55 wing slots.
+local mixed={}
+for i=1,56 do
+    local record=json.decode(json.encode(data.fish[1]))
+    record.id=i;record.mode=i==56 and "follow" or "wander";mixed[i]=record
+end
+Storage.save(directory,context,mixed)
+worldAddress=worldAddress+1;loadWorld()
+local loneFollower=spawned[#spawned]
+for _=1,1500 do tick() end
+assert(distance(loneFollower.location,origin)<1500,"55 wanderers must not push one follower 80 metres away")
+
 for _, line in ipairs(logs) do originalPrint(line) end
-originalPrint("PASS: removed legacy aliases; multiple spawn; 30/60/144 FPS; front wing formation/distance/view; native save success/failure; LastModified change regression; restore once; slot isolation; persisted deletion; backup recovery; Windows commit failure; disk full; schema validation; random independent sizes; size save/load; legacy default size; bounded face morph weights; automatic directory creation/retry; bounded current+backup files")
+originalPrint("PASS: removed legacy aliases; multiple spawn; 30/60/144 FPS; front wing formation/distance/view; native save success/failure; LastModified change regression; restore once; slot isolation; persisted deletion; backup recovery; Windows commit failure; disk full; schema validation; random independent sizes; size save/load; legacy default size; bounded face morph weights; automatic directory creation/retry; bounded current+backup files; 55-wanderer/one-follower regression")

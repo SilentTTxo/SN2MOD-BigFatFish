@@ -10,13 +10,25 @@ tools=unreal.AssetToolsHelpers.get_asset_tools()
 task=unreal.AssetImportTask();task.filename=str(ROOT/'SourceAssets/Export/BigFatFish_GrabEat.fbx')
 task.destination_path=BASE+'/Character';task.destination_name='AN_BigFatFish_GrabEat'
 task.automated=True;task.replace_existing=True;task.save=True
+task.replace_existing_settings=True
 opt=unreal.FbxImportUI();opt.import_mesh=False;opt.import_animations=True;opt.import_materials=False;opt.import_textures=False
 opt.automated_import_should_detect_type=False;opt.mesh_type_to_import=unreal.FBXImportType.FBXIT_ANIMATION
 opt.skeleton=mesh.get_editor_property('skeleton');task.options=opt;task.factory=unreal.FbxFactory()
+animation_import=opt.get_editor_property('anim_sequence_import_data')
+for setting in ('convert_scene','convert_scene_unit','force_front_x_axis','use_default_sample_rate'):
+    animation_import.set_editor_property(setting,True)
 tools.import_asset_tasks([task])
 animation=unreal.load_asset(BASE+'/Character/AN_BigFatFish_GrabEat')
 assert isinstance(animation,unreal.AnimSequence),str(task.imported_object_paths)
 assert abs(animation.get_editor_property('sequence_length')-4.8)<.05
+evaluation=unreal.AnimPoseEvaluationOptions()
+swim=unreal.load_asset(BASE+'/Character/AN_BigFatFish_Swim')
+feed_pose=unreal.AnimPoseExtensions.get_anim_pose_at_time(animation,0.,evaluation)
+swim_pose=unreal.AnimPoseExtensions.get_anim_pose_at_time(swim,0.,evaluation)
+for bone in ('head','neck','hand_L','hand_R'):
+    a=unreal.AnimPoseExtensions.get_bone_pose(feed_pose,bone,unreal.AnimPoseSpaces.WORLD)
+    b=unreal.AnimPoseExtensions.get_bone_pose(swim_pose,bone,unreal.AnimPoseSpaces.WORLD)
+    assert (a.translation-b.translation).length()<.3,(bone,a,b)
 bp=unreal.load_asset(BASE+'/Character/ABP_BigFatFish_Gaze');assert bp
 graph=next(g for g in bp.get_animation_graphs() if g.get_name()=='AnimGraph')
 for name in ('FeedSlot','LocalToComponent'):

@@ -1,10 +1,10 @@
 # Big Fat Fish — Sea Rice / 海稻
 
-Version / 版本：0.3.0-prototype · Windows Steam，UE 5.6.1，CL-131439。
+Version / 版本：0.3.1-prototype · Windows Steam，UE 5.6.1，CL-131439。
 
-增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.5.0 更新修复眨眼、嘴型启用时脸部材质回退的问题。
+增加海稻、可采收海稻谷和装配台的大白饭配方。海稻使用更圆润的几何、平滑法线和颜色贴图，稻穗以植株顶端为生长原点。另附的大肥鱼 0.5.1 更新修复眨眼、嘴型启用时脸部材质回退的问题。
 
-Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.5.0 update fixes face materials falling back when blink or mouth morphs activate.
+Adds Sea Rice, harvestable grains, and a Steamed Rice recipe at the fabricator. The crop has smoother geometry, smooth normals, color textures, and panicles that grow around the crown. The separate Big Fat Fish 0.5.1 update fixes face materials falling back when blink or mouth morphs activate.
 
 种植、采收、大白饭制作已由玩家验收。本版修正网格仍绑定灰色默认材质的问题、原生生长提示键及顶部稻穗定位，并接入大白饭抢饭召唤；这些修改的游戏内效果仍待验收。
 
@@ -41,17 +41,17 @@ Asset IDs are retained. Crown anchoring also corrects existing panicles still ow
 
 ## 大白饭召唤 / Summoning with rice
 
-使用 Big Fat Fish 0.5.0 完整包。大白饭制作配方不变；在背包使用一碗大白饭，会显示饭碗，一只新鲸鱼娘从玩家身后绕到前方，伸手抢走、吃饭，随后加入跟随。
+使用 Big Fat Fish 0.5.1 完整包。大白饭制作配方不变；在背包使用一碗大白饭，会显示饭碗，一只新鲸鱼娘从玩家身后绕到前方，伸手抢走、吃饭，随后加入跟随。
 
-Use the complete Big Fat Fish 0.5.0 package. The crafting recipe is unchanged. Using Steamed Rice shows a bowl; a new companion swims from behind the player, reaches for the bowl, eats, and joins formation following.
+Use the complete Big Fat Fish 0.5.1 package. The crafting recipe is unchanged. Using Steamed Rice shows a bowl; a new companion swims from behind the player, reaches for the bowl, eats, and joins formation following.
 
-约 1.6 秒抢到饭时才扣除 1 份，约 4.8 秒完成。过程中再次使用不会再扣物品；启动失败或抢到前缺少米饭则取消。单机/本地主角逻辑已做离线检查，联网行为未验收。动画对位、游戏内使用入口及演出需实机验收。
+使用大白饭由游戏原生背包消耗 1 份，模组不再额外移除物品。使用后关闭 PDA，鱼先从身后游到前方，确认已渲染后才播放伸手、抓取和进食；整段约 10 秒。饭碗保持满碗直到实际进食段结束，再展示空碗并收起。重复请求或启动失败时，只退回能够通过原生使用前后数量差确认已消耗的一份。单机/本地主角逻辑已做离线检查，联网行为未验收。动画对位、游戏内使用入口及演出需实机验收。
 
-One serving is deducted at the grab around 1.6 seconds, and the sequence finishes around 4.8 seconds. Repeated uses during an active sequence spend no additional rice. Missing food or startup failure cancels the arrival. Local-player transaction logic has offline coverage; multiplayer, the in-game use entry point and visual alignment remain unverified.
+Native backpack use spends one serving; the mod performs no extra item removal. Close the PDA after use. The fish approaches from behind before the reach/grab/eat montage starts, and the whole visible sequence lasts roughly ten seconds. The bowl stays full until the actual eating segment ends, then an empty bowl is shown and put away. A rejected/failed use is refunded only when a before/after native-use receipt proves one serving was spent. Local-player transaction logic has offline coverage; multiplayer, the in-game use entry point and visual alignment remain unverified.
 
-吃完后使用游戏保存，保存新同伴。临时饭碗不写入大肥鱼 JSON，尚未抢到饭的新鱼也不会写入同伴存档。
+吃完后使用游戏保存，保存新同伴。临时饭碗和演出进度不写入大肥鱼 JSON；由原生使用支付后创建的新鱼会作为普通跟随同伴保存。
 
-Save the game after feeding to keep the companion. Temporary bowls are not written to the companion JSON, and an unpaid arrival is not persisted as a companion.
+Save the game after feeding to keep the companion. Temporary bowls and sequence progress are not written to companion JSON. A fish created by the native-paid use is saved as a normal following companion.
 
 ## 保存 / Saving
 

@@ -1,4 +1,4 @@
--- Big Fat Fish v0.5.0: view-relative wing formation and SaveId-scoped recovery.
+-- Big Fat Fish v0.5.1: view-relative wing formation and SaveId-scoped recovery.
 local UEHelpers = require("UEHelpers")
 local dir = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])")
 local config = dofile(dir .. "config.lua")
@@ -193,6 +193,7 @@ local function moveFollow(f, index, dt, viewOrigin, viewRotation)
     end
 end
 local function update()
+    Feeding.poll()
     if not state.context or #state.fish == 0 then return end
     local pc, pawn, world = playerContext()
     if not world or world:GetAddress() ~= state.worldAddress then resetSession(); return end
@@ -203,8 +204,10 @@ local function update()
         targetOrigin = camera:GetCameraLocation()
         viewRotation = camera:GetCameraRotation()
     end
+    local followIndex=0
     for index, f in ipairs(state.fish) do
         if valid(f.actor) then
+            if f.mode=='follow' then followIndex=followIndex+1 end
             local now = f.actor:GetGameTimeSinceCreation()
             local dt = math.max(0, math.min(now - f.lastTime, 0.2)); f.lastTime = now
             if not state.paused or Feeding.isActive(f) then
@@ -219,7 +222,7 @@ local function update()
                         Y = f.center.Y + config.PatrolRadiusCm * math.sin(angle),
                         Z = f.center.Z + config.VerticalBobCm * math.sin(2 * f.phase)}
                     f.yaw = math.deg(angle + math.pi / 2) + config.MeshYawOffsetDegrees
-                elseif f.mode == "follow" then moveFollow(f, index, dt, targetOrigin, viewRotation) end
+                elseif f.mode == "follow" then moveFollow(f, followIndex, dt, targetOrigin, viewRotation) end
                 f.actor:K2_SetActorLocation(f.position, false, {}, false)
                 f.actor:K2_SetActorRotation({Pitch = 0, Yaw = f.yaw, Roll = 0}, false)
             end
@@ -244,7 +247,19 @@ local function guarded(callback)
         if ok then lastError = nil end
     end
 end
-Feeding.configure({ready=ready,name=UEHelpers.FindOrAddFName,log=log,
+local function offeringMenuOpen(pc)
+    if pc.bShowMouseCursor or pc:IsLookInputIgnored() then return true end
+    local common=StaticFindObject('/Script/CommonUI.CommonActivatableWidget')
+    if valid(common) then
+        for _,name in ipairs({'WBP_PDAScreen_C','WBP_Inventory_C'}) do
+            for _,widget in ipairs(FindAllOf(name) or {}) do
+                if valid(widget) and widget:IsA(common) and widget:IsActivated() and widget:IsVisible() then return true end
+            end
+        end
+    end
+    return false
+end
+Feeding.configure({ready=ready,name=UEHelpers.FindOrAddFName,log=log,menuOpen=offeringMenuOpen,
     canSpawn=function() return #state.fish<config.MaxFish and not state.readOnly end,
     spawn=function(position,yaw)
         local _,_,world=ready();assert(world,'Game world is not ready')
@@ -259,13 +274,29 @@ RegisterCustomEvent('K2_ActivateAbility',function(context)
     local ability=context:get()
     if not valid(ability) or ability:GetClass():GetFullName()~='BlueprintGeneratedClass /BigFatFishRice/Blueprints/GA_BFF_OfferRice.GA_BFF_OfferRice_C' then return end
     local avatar=ability:GetAvatarActorFromActorInfo()
+    local receipt=Feeding.claimReceipt(avatar)
     gameThread(function()
-        local ok,message=Feeding.request(avatar)
+        local ok,message=Feeding.request(avatar,ability,receipt)
         if not ok then log(message) end
     end)
 end)
+local inventoryUseHookReady=false
+local function installInventoryUseHook()
+    if inventoryUseHookReady then return end
+    local path='/Script/Subnautica2.SN2InventoryItemViewModel:Interact'
+    if not valid(StaticFindObject(path)) then return end
+local ok,err=pcall(RegisterHook,path,function(context)
+    local ok,err=pcall(Feeding.beginInventoryUse,context:get())
+    if not ok then log('Rice use receipt: '..tostring(err)) end
+end,function(context)
+    local ok,err=pcall(Feeding.endInventoryUse,context:get())
+    if not ok then log('Rice use receipt: '..tostring(err)) end
+end)
+    if ok then inventoryUseHookReady=true;log('Native backpack cost receipt hook ready.') end
+end
+installInventoryUseHook()
 LoopInGameThreadAfterFrames(1, guarded(update))
-LoopInGameThreadWithDelay(500, guarded(poll))
+LoopInGameThreadWithDelay(500, guarded(function() installInventoryUseHook();poll() end))
 Save.registerSaveCompleted(function()
     gameThread(function()
         local context = Save.context()
@@ -288,7 +319,7 @@ local callbacks = {
         Gaze.enabled = mode == "on"; log("Head/eye tracking=" .. tostring(Gaze.enabled))
     end,
     bigfatfish_status = function()
-        log("v0.5.0; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY") .. '; feeding=' .. Feeding.status())
+        log("v0.5.1; total=" .. #state.fish .. "; slot=" .. (state.context and state.context.slot or "NOT READY") .. '; feeding=' .. Feeding.status())
         for _, f in ipairs(state.fish) do log("ID=" .. f.id .. " size=" .. string.format("%.2fx", f.size) .. " mode=" .. f.mode .. " gaze=" .. tostring(f.gazeActive == true) .. " valid=" .. tostring(valid(f.actor))) end
     end,
 }
@@ -300,4 +331,4 @@ for name, callback in pairs(callbacks) do
         return true
     end)
 end
-log("Big Fat Fish v0.5.0 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")
+log("Big Fat Fish v0.5.1 loaded. Commands: bigfatfish_spawn [count], bigfatfish_follow, bigfatfish_stay, bigfatfish_wander, bigfatfish_remove, bigfatfish_gaze on|off, bigfatfish_status.")

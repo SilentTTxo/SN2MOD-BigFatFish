@@ -1,10 +1,14 @@
 """Package only Big Fat Fish runtime/assets and player documentation."""
 import hashlib
 import json
+import argparse
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parents[1]
+parser=argparse.ArgumentParser()
+parser.add_argument('--build-only',action='store_true',help='Validate and package sources before the running game can be closed for installation')
+options=parser.parse_args()
 project = json.loads((ROOT / "project.json").read_text(encoding="utf-8-sig"))
 version = project["version"]
 game = Path(project["game_root"])
@@ -12,7 +16,7 @@ entries = {}
 
 def add(source, destination, installed=None):
     data = source.read_bytes()
-    if installed is not None:
+    if installed is not None and not options.build_only:
         assert installed.read_bytes() == data, f"Installed file differs: {installed}"
     assert destination not in entries, destination
     entries[destination] = data
@@ -96,6 +100,7 @@ with ZipFile(temporary) as package:
         assert package.read(name) == data, name
 temporary.replace(archive)
 manifest = {
+    "installed_files_verified": not options.build_only,
     "version": version,
     "archive": archive.name,
     "size_bytes": archive.stat().st_size,
@@ -105,5 +110,5 @@ manifest = {
 }
 archive.with_suffix(".manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({key: manifest[key] for key in ("version", "archive", "size_bytes", "sha256")}, ensure_ascii=False))
-print(f"PASS: {len(entries)} files verified; runtime and containers match installed files.")
+print(f"PASS: {len(entries)} ZIP entries verified; installed-file check={'pending' if options.build_only else 'passed'}.")
 print(archive)
